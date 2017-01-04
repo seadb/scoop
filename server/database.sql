@@ -1,0 +1,4 @@
+DROP DATABASE IF EXISTS scoop;
+CREATE DATABASE scoop;
+
+\c scoop;
