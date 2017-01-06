@@ -1,7 +1,8 @@
-var users = require('./user-repository.js');
+var userModel = require('./user-model');
 
-function getUsers(req, res, next) {
-  db.any('select * from users')
+const getUsers = function(req, res, next) {
+  var Users = new userModel();
+  Users.getUsers()
     .then(function (data) {
       res.status(200)
         .json({
@@ -15,9 +16,27 @@ function getUsers(req, res, next) {
     });
 }
 
-function getUserById(req, res, next) {
+const getUserById = function(req, res, next) {
   var userId = parseInt(req.params.id);
-  users.getUserById(userId)
+  var Users = new userModel();
+  console.log(req.params.id);
+  Users.getUserById(userId)
+    .then(function (data) {
+      res.status(200)
+        .json({
+          status: 'success',
+          data: data,
+          message: 'Retrieved one user'
+        });
+    })
+    .catch(function (err) {
+      return next(err);
+    });
+}
+
+const getUserByEmail = function(req, res, next) {
+  var Users = new userModel();
+  Users.getUserByEmail(req.body.email)
     .then(function (data) {
       res.status(200)
         .json({
@@ -31,28 +50,16 @@ function getUserById(req, res, next) {
     });
 }
 
-function getUserByEmail(req, res, next) {
-  var userId = parseInt(req.params.id);
-  users.getUserByEmail(req.body.email)
-    .then(function (data) {
-      res.status(200)
-        .json({
-          status: 'success',
-          data: data,
-          message: 'Retrieved ONE user'
-        });
-    })
-    .catch(function (err) {
-      return next(err);
-    });
-}
-
-function createUser(req, res, next) {
+const createUser = function(req, res, next) {
+  req.body = {
+    email: "sea@bridson.me",
+    password: "password",
+    firstName: "chelsea",
+    age: "24"
+  }
   req.body.age = parseInt(req.body.age);
-  var sql ='INSERT INTO users(email, password, first_name, last_name, bio, ' +
-      'age, sex) VALUES(${email}, ${password}, ${firstName}, ${lastName}, ' +
-      '${bio}, ${age}, ${sex})' 
-  db.none(sql, req.body)
+  const model = new userModel();
+  model.createUser(req.body)
     .then(function () {
       res.status(200)
         .json({
@@ -103,7 +110,7 @@ module.exports = {
   getUsers: getUsers,
   getUserById: getUserById,
   getUserByEmail: getUserByEmail,
-  createUser: createUser,
+  createUser: createUser
 //  updateuser: updateUser,
 //  removeuser: removeUser
 };
