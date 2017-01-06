@@ -40,7 +40,7 @@ function configExpress(app) {
   app.use(bodyParser.json()); // get information = require( html forms
   app.use(flash());
   
-  app = configSession(app);
+  //app = configSession(app);
   return app;
 }
 

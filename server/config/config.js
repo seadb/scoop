@@ -11,9 +11,9 @@ config.uploadFilesInMemory = process.env.UPLOAD_FILES_IN_MEMORY || false;
 config.seedDB = true;
 
 // Token settings
-config.session = {
-  secret: process.env.SESSION_SECRET,
-  expiration: process.env.SESSION_EXPIRATION || 60*60*24 //24 hours
+config.token = {
+  secret: process.env.TOKEN_SECRET,
+  expiresIn: process.env.TOKEN_EXPIRES_IN || 60*60*24 //24 hours
 };
 
 // Server settings
