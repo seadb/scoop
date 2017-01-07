@@ -1,8 +1,8 @@
 var userModel = require('./user-model');
 
-const getUsers = function(req, res, next) {
+const getAll = function(req, res, next) {
   var Users = new userModel();
-  Users.getUsers()
+  Users.getAll()
     .then(function (data) {
       res.status(200)
         .json({
@@ -16,11 +16,10 @@ const getUsers = function(req, res, next) {
     });
 }
 
-const getUserById = function(req, res, next) {
-  var userId = parseInt(req.params.id);
+const getOneById = function(req, res, next) {
+  var props = parseInt(req.params.id);
   var Users = new userModel();
-  console.log(req.params.id);
-  Users.getUserById(userId)
+  Users.getOne(userId)
     .then(function (data) {
       res.status(200)
         .json({
@@ -34,9 +33,9 @@ const getUserById = function(req, res, next) {
     });
 }
 
-const getUserByEmail = function(req, res, next) {
+const getOneByEmail = function(req, res, next) {
   var Users = new userModel();
-  Users.getUserByEmail(req.body.email)
+  Users.getOne(req.body.email)
     .then(function (data) {
       res.status(200)
         .json({
@@ -50,16 +49,10 @@ const getUserByEmail = function(req, res, next) {
     });
 }
 
-const createUser = function(req, res, next) {
-  req.body = {
-    email: "sea@bridson.me",
-    password: "password",
-    firstName: "chelsea",
-    age: "24"
-  }
+const create = function(req, res, next) {
   req.body.age = parseInt(req.body.age);
-  const model = new userModel();
-  model.createUser(req.body)
+  const user = new userModel(req.body);
+  user.save()
     .then(function () {
       res.status(200)
         .json({
@@ -107,10 +100,10 @@ const createUser = function(req, res, next) {
 
 
 module.exports = {
-  getUsers: getUsers,
-  getUserById: getUserById,
-  getUserByEmail: getUserByEmail,
-  createUser: createUser
+  getAll: getAll,
+  getOneById: getOneById,
+  getOneByEmail: getOneByEmail,
+  create: create
 //  updateuser: updateUser,
 //  removeuser: removeUser
 };

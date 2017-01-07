@@ -1,21 +1,24 @@
 'use strict';
 
-var promise = require('bluebird');
-var pgp = require('pg-promise')({promiseLib: promise});
-var config = require('../config/config.js');
-var connectionString = config.postgres.connectionString;
-var db = pgp(connectionString);
+const promise = require('bluebird');
+const pgp = require('pg-promise')({promiseLib: promise});
+const config = require('../config/config.js');
+const connectionString = config.postgres.connectionString;
+const db = pgp(connectionString);
+const bcrypt = require('bcrypt');
+
+const SALT_FACTOR = 5;
 
 //const camelToUnderscore = function(user) {
-//  var newUser = {};
-//  for(var prop in user) {
-//    var newProp = prop.replace(/([a-z])([A-Z])/g, '$1_$2').toLowerCase();
+//  const newUser = {};
+//  for(const prop in user) {
+//    const newProp = prop.replace(/([a-z])([A-Z])/g, '$1_$2').toLowerCase();
 //    newUser[newProp] = user[prop]
 //  }
 //  return newUser;
 //}
 
-function User() {
+function User(obj) {
 
   this.id = '';
   this.email = '';
@@ -26,38 +29,43 @@ function User() {
   this.age = 0;
   this.sex = ''
   this.created = null;
-  this.createUser = function(user) {
-    //user = camelToUnderscore(user);
-    //var sql ='INSERT INTO users(email, password, first_name, last_name, bio, ' +
+
+  for (const prop in obj) {
+    if (this.hasOwnProperty(prop)) {
+      this[prop] = obj[prop];
+    }
+  }
+
+  this.save = () => {
+    //const sql ='INSERT INTO users(email, password, first_name, last_name, bio, ' +
     //  'age, sex) VALUES(${email}, ${password}, ${firstName}, ${lastName}, ' +
     //  '${bio}, ${age}, ${sex})' 
-    var sql ='INSERT INTO users (email, password, first_name) VALUES(${email}' +
-      ', ${password}, ${firstName})';
-    return db.none(sql, user);
+    this.encryptPassword( () => {
+    })
+    const sql ='INSERT INTO users (email, password, first_name) VALUES (${email}' +
+    ', ${password}, ${firstName}) RETURNING *';
+    return db.one(sql, this);
   }
-  this.getUsers = function() {
+  this.getAll = function() {
     return db.any('SELECT * FROM users');
-
   };
-  this.getUserByEmail = function(email) {
-    return db.one('SELECT * FROM users WHERE email = $1', email);
+  this.getOne = function(input) {
+    if (typeof(input) === "string") {
+      const email = input
+      return db.one('SELECT * FROM users WHERE email = $1', email);
+    }
+    else if (typeof(input) === "number") {
+      const userId = input;
+      return db.one('SELECT * FROM users WHERE id = $1', userId);
+    }
   };
-  this.getUserById = function(userId) {
-    userId = parseInt(userId);
-    return db.one('SELECT * FROM users WHERE id = $1', userId);
-  };
-  this.encryptPassword = function(next) {  
-    const user = this,
-          SALT_FACTOR = 5;
+  this.encryptPassword = (next) => {  
 
-    if (!user.isModified('password')) return next();
-
-    bcrypt.genSalt(SALT_FACTOR, function(err, salt) {
+    bcrypt.genSalt(SALT_FACTOR, (err, salt) => {
       if (err) return next(err);
-
-      bcrypt.hash(user.password, salt, null, function(err, hash) {
+      bcrypt.hash(this.password, salt, (err, hash) => {
         if (err) return next(err);
-        user.password = hash;
+        this.password = hash;
         next();
       });
     });
