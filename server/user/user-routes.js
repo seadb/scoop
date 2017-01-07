@@ -6,8 +6,8 @@ var controller = require('./user-controller.js');
 //app.route('/users/:id').get(authentication.isAuthenticated, user.findUser);
 //app.route('/users').get(authentication.isAuthenticated, user.findUsers);
 
-routes.get('/', controller.getUsers);
-routes.get('/create', controller.createUser);
-routes.get('/:id', controller.getUserById);
+routes.get('/', controller.getAll);
+routes.get('/:id', controller.getOneById);
+routes.post('/create', controller.create);
 
 module.exports = routes;
