@@ -2,7 +2,7 @@ const bcrypt = require('bcrypt')
 const jwt    = require('jsonwebtoken');
 const userModel  = require('../user/user-model.js')
 const Users = new userModel();
-const config = require('../config/config').token
+const config = require('../config').token
 
 const login = (req, res, next) => {
   Users.getOne(req.body.email)

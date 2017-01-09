@@ -2,7 +2,7 @@
 
 const promise = require('bluebird');
 const pgp = require('pg-promise')({promiseLib: promise});
-const config = require('../config/config.js');
+const config = require('../config');
 const connectionString = config.postgres.connectionString;
 const db = pgp(connectionString);
 const bcrypt = require('bcrypt');
