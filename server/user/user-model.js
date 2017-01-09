@@ -46,17 +46,17 @@ function User(obj) {
     ', ${password}, ${firstName}) RETURNING *';
     return db.one(sql, this);
   }
-  this.getAll = function() {
+  this.all = function() {
     return db.any('SELECT * FROM users');
   };
-  this.getOne = function(input) {
+  this.one = function(input) {
     if (typeof(input) === "string") {
       const email = input
       return db.one('SELECT * FROM users WHERE email = $1', email);
     }
     else if (typeof(input) === "number") {
-      const userId = input;
-      return db.one('SELECT * FROM users WHERE id = $1', userId);
+      const id = input;
+      return db.one('SELECT * FROM users WHERE id = $1', id);
     }
   };
   this.encryptPassword = (next) => {  
