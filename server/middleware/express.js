@@ -12,7 +12,7 @@ const connectpg = require('connect-pg-simple');
 function configSession(app) {
   var pgSession = connectpg(session);
   app.use(session({
-    cookie: { 
+    cookie: {
       expires : new Date(Date.now() + (24*60*60*1000)), //24 Hours
       httpOnly:true
       //secure: true
@@ -29,7 +29,7 @@ function configSession(app) {
 
   app.use(passport.initialize());
   app.use(passport.session());
-  
+
   return app;
 }
 
@@ -39,7 +39,7 @@ function configExpress(app) {
   app.use(cookieParser()); // read cookies (needed for auth)
   app.use(bodyParser.json()); // get information = require( html forms
   app.use(flash());
-  
+
   //app = configSession(app);
   return app;
 }
