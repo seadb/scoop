@@ -5,7 +5,7 @@ const Users = new userModel();
 const config = require('../config').token
 
 const login = (req, res, next) => {
-  Users.getOne(req.body.email)
+  Users.one(req.body.email)
     .then((user) => {
       const bool = bcrypt.compareSync(req.body.password, user.password);
       if (!bool) { //
@@ -55,7 +55,8 @@ const register = (req, res, next) => {
     })
     .catch((err) => {
       res.status(500).json({
-        status: 'error'
+        status: 'error',
+        error: err
       });
     });
 }

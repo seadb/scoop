@@ -1,8 +1,8 @@
 var userModel = require('./user-model');
 
-const getAll = function(req, res, next) {
+const all = (req, res, next) => {
   var Users = new userModel();
-  Users.getAll()
+  Users.all()
     .then(function (data) {
       res.status(200)
         .json({
@@ -16,10 +16,10 @@ const getAll = function(req, res, next) {
     });
 }
 
-const getOneById = function(req, res, next) {
-  var props = parseInt(req.params.id);
+const byID = (req, res, next) => {
+  var id = parseInt(req.params.id);
   var Users = new userModel();
-  Users.getOne(userId)
+  Users.one(id)
     .then(function (data) {
       res.status(200)
         .json({
@@ -33,9 +33,9 @@ const getOneById = function(req, res, next) {
     });
 }
 
-const getOneByEmail = function(req, res, next) {
+const byEmail = (req, res, next) => {
   var Users = new userModel();
-  Users.getOne(req.body.email)
+  Users.one(req.body.email)
     .then(function (data) {
       res.status(200)
         .json({
@@ -100,9 +100,9 @@ const create = function(req, res, next) {
 
 
 module.exports = {
-  getAll: getAll,
-  getOneById: getOneById,
-  getOneByEmail: getOneByEmail,
+  all: all,
+  byID: byID,
+  byEmail: byEmail,
   create: create
 //  updateuser: updateUser,
 //  removeuser: removeUser

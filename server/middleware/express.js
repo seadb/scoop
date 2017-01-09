@@ -1,4 +1,4 @@
-const config = require('./config');
+const config = require('../config');
 const morgan = require('morgan');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
