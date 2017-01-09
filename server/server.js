@@ -8,8 +8,8 @@ app = configExpress(app);
 
 app.use('/', routes);
 
-app.listen(3000, function() {
-    console.log('App listening on http://' + config.server.host+':' +
-        config.server.port);
+app.listen(3000, () => {
+    var address = 'http://' + config.server.host + ':' + config.server.port;
+    console.log('App listening on' + address );
 });
 
