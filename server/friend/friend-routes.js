@@ -1,10 +1,11 @@
-var express = require('express');
-var routes = express.Router();
-var controller = require('./friend-controller.js');
+const express = require('express');
+const routes = express.Router();
+const controller = require('./friend-controller');
+const isAuthenticated = require('../middleware/auth');
 
-routes.post('/', controller.getAll);
-routes.post('/:id/add', controller.add);
-routes.post('/:id/delete', controller.delete);
-routes.post('/reciprocal', controller.reciprocal);
+routes.get('/:id', isAuthenticated, controller.all);
+routes.post('/add/:id', controller.add);
+routes.post('/delete/:id', controller.delete);
+routes.get('/reciprocal/:id', controller.reciprocal);
 
 module.exports = routes;

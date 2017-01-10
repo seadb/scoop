@@ -1,4 +1,5 @@
 'use strict';
+const promise = require('bluebird');
 
 var config = {};
 
@@ -27,6 +28,9 @@ config.postgres = {
   connectionString: process.env.POSTGRES_CONNECTION_STRING
 };
 
+config.pgp = {
+  promiseLib: promise
+};
 
 // Export configuration object
 module.exports = config;
