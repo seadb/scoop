@@ -9,7 +9,7 @@ const login = (req, res, next) => {
     .then((user) => {
       const bool = bcrypt.compareSync(req.body.password, user.password);
       if (!bool) { //
-        res.json({
+        res.status(401).json({
           success: false,
           message: 'Authentication failed. Wrong password.'
         });
@@ -18,7 +18,7 @@ const login = (req, res, next) => {
         const token = jwt.sign({ sub: user.id }, config.secret, { 
           expiresIn: config.expiresIn 
         })
-        res.json({
+        res.status(401).json({
           success: true,
           message: 'Login successful',
           token: token
@@ -28,7 +28,8 @@ const login = (req, res, next) => {
     .catch((err) => {
       res.status(500).json({
         status: 'error',
-        error: err
+        error: err,
+        message: 'User not found with email ' + req.body.email
       });
     });
 }
@@ -40,27 +41,44 @@ const logout = () => {
 const register = (req, res, next) => {
   req.body.age = parseInt(req.body.age);
   const user = new userModel(req.body);
-  user.save()
+  user.one(req.body.email)
     .then((user) => {
-      return jwt.sign({ sub: user.id }, config.secret, {
-        expiresIn: config.expiresIn 
-      });
-    })
-    .then((token) => {
-      res.status(200).json({
-        status: 'success',
-        message: 'Registered user and logged in',
-        token: token
+      return res.status(401).json({
+        status: 'error',
+        error: 'The email address ' + req.body.email +
+          ' is already registered to a user account'
       });
     })
     .catch((err) => {
-      res.status(500).json({
-        status: 'error',
-        error: err
-      });
-    });
+      if(err.received === 0) {
+        user.save()
+          .then((user) => {
+            return jwt.sign({ sub: user.id }, config.secret, {
+              expiresIn: config.expiresIn 
+            });
+          })
+          .then((token) => {
+            res.status(200).json({
+              status: 'success',
+              message: 'Registered user and logged in',
+              token: token
+            });
+          })
+          .catch((err) => {
+            res.status(500).json({
+              status: 'error',
+              error: err
+            });
+          });
+      }
+      else {
+        res.status(500).json({
+          status: 'error',
+          error: err
+        });
+      }
+    })
 }
-
 
 module.exports = {
   login: login,

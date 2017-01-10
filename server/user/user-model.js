@@ -1,10 +1,6 @@
 'use strict';
 
-const promise = require('bluebird');
-const pgp = require('pg-promise')({promiseLib: promise});
-const config = require('../config');
-const connectionString = config.postgres.connectionString;
-const db = pgp(connectionString);
+const db = require('../db');
 const bcrypt = require('bcrypt');
 
 const SALT_FACTOR = 5;
@@ -40,11 +36,19 @@ function User(obj) {
     //const sql ='INSERT INTO users(email, password, first_name, last_name, bio, ' +
     //  'age, sex) VALUES(${email}, ${password}, ${firstName}, ${lastName}, ' +
     //  '${bio}, ${age}, ${sex})' 
-    this.encryptPassword( () => {
-    })
-    const sql ='INSERT INTO users (email, password, first_name) VALUES (${email}' +
-    ', ${password}, ${firstName}) RETURNING *';
-    return db.one(sql, this);
+    return bcrypt.genSalt(SALT_FACTOR)
+      .then( (err, salt) => {
+        if (err) throw err;
+        return bcrypt.hash(this.password, salt);
+      })
+      .then((err, hash) => {
+        if (err) throw err;
+        this.password = hash;
+        const sql ='INSERT INTO users (email, password, first_name) VALUES (${email}' +
+        ', ${password}, ${firstName}) RETURNING *';
+        console.log(this);
+        return db.one(sql, this);
+      });
   }
   this.all = function() {
     return db.any('SELECT * FROM users');
@@ -61,14 +65,6 @@ function User(obj) {
   };
   this.encryptPassword = (next) => {  
 
-    bcrypt.genSalt(SALT_FACTOR, (err, salt) => {
-      if (err) return next(err);
-      bcrypt.hash(this.password, salt, (err, hash) => {
-        if (err) return next(err);
-        this.password = hash;
-        next();
-      });
-    });
   }
 }
 
