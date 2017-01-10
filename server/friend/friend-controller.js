@@ -3,7 +3,6 @@ const Friends = new friendModel();
 
 module.exports = {
   add: (req, res, next) => {
-    console.log(req.user);
     const id = parseInt(req.params.id)
     Friends.add(req.user.id, req.params.id)
       .then((data) => {
@@ -19,6 +18,7 @@ module.exports = {
       });
   },
   all: (req, res, next) => {
+    console.log(req.user);
     const id = parseInt(req.params.id)
     Friends.all(id)
       .then((data) => {

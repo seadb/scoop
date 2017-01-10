@@ -1,7 +1,9 @@
 const userModel = require('../user/user-model');
-const Users = new userModel();
+const User = new userModel();
+const jwt = require('jsonwebtoken');
+const config = require('../config');
 
-const isAuthenticated = (req, res, next) => {
+const authenticate = (req, res, next) => {
   console.log(req.headers);
   if (!(req.headers && req.headers.authorization)) {
     return res.status(400).json({
@@ -9,9 +11,10 @@ const isAuthenticated = (req, res, next) => {
     });
   }
   // decode the token
-  var header = req.headers.authorization.split(' ');
+  var header = req.headers.authorization.split('\.');
+  console.log(header);
   var token = header[1];
-  jwt.verify(token, config.token.secret, (err, decoded) => {
+  jwt.verify(req.headers.authorization, config.token.secret, (err, decoded) => {
     if (err) {
       return res.status(401).json({
         status: 'Token has expired'
@@ -22,7 +25,7 @@ const isAuthenticated = (req, res, next) => {
       return User.one(parseInt(decoded.sub))
       .then((user) => {
         req.user = user;
-        next();
+        return next();
       })
       .catch((err) => {
         res.status(500).json({
@@ -33,4 +36,4 @@ const isAuthenticated = (req, res, next) => {
   });
 }
 
-module.exports = isAuthenticated;
+module.exports = authenticate;
