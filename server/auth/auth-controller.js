@@ -7,7 +7,9 @@ const config = require('../config').token
 const login = (req, res, next) => {
   Users.one(req.body.email)
     .then((user) => {
-      const bool = bcrypt.compareSync(req.body.password, user.password);
+      return bcrypt.compare(req.body.password, user.password);
+    })
+    .then((bool) => {
       if (!bool) { //
         res.status(401).json({
           success: false,
@@ -26,7 +28,7 @@ const login = (req, res, next) => {
       }
     })
     .catch((err) => {
-      res.status(500).json({
+      res.status(401).json({
         status: 'error',
         error: err,
         message: 'User not found with email ' + req.body.email

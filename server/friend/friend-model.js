@@ -14,6 +14,7 @@ function Friend() {
 
   this.add = (from, to) => {
 
+    console.log(from + typeof(from) + to + typeof(to))
      var sql = 'INSERT INTO friends (from_user_id, to_user_id) ' +
                'VALUES ($1, $2) ' +
                'RETURNING friends.*;';

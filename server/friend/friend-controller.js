@@ -1,10 +1,15 @@
+const userModel = require('../user/user-model')
+const Users = new userModel()
 const friendModel = require('./friend-model')
-const Friends = new friendModel();
+const Friends = new friendModel()
 
 module.exports = {
   add: (req, res, next) => {
     const id = parseInt(req.params.id)
-    Friends.add(req.user.id, req.params.id)
+    Users.one(id)
+      .then((user) => {
+        return Friends.add(req.user.id, id);
+      })
       .then((data) => {
         res.status(200)
           .json({
@@ -18,9 +23,7 @@ module.exports = {
       });
   },
   all: (req, res, next) => {
-    console.log(req.user);
-    const id = parseInt(req.params.id)
-    Friends.all(id)
+    Friends.all(req.user.id)
       .then((data) => {
         res.status(200)
           .json({
