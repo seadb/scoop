@@ -36,8 +36,24 @@ module.exports = {
         return next(err);
       });
   },
-  delete: (req, res) => {
+  delete: (req, res, next) => {
+    const id = parseInt(req.params.id)
+    Users.one(id)
+      .then((user) => {
+        return Friends.delete(req.user.id, id);
+      })
+      .then((data) => {
+        res.status(200)
+          .json({
+            status: 'success',
+            data: data,
+            message: 'Deleted friend ' + req.params.id
+          });
+      })
+      .catch((err) => {
+        return next(err);
+      });
   },
-  reciprocal: (req, res) => {
+  reciprocal: (req, res, next) => {
   }
 }

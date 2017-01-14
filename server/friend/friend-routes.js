@@ -5,7 +5,7 @@ const authenticate = require('../middleware/auth');
 
 routes.get('/', authenticate, controller.all);
 routes.post('/add/:id', authenticate, controller.add);
-//routes.post('/delete/:id', controller.delete);
+routes.post('/delete/:id', authenticate, controller.delete);
 //routes.get('/reciprocal/:id', controller.reciprocal);
 
 module.exports = routes;
