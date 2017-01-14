@@ -5,22 +5,26 @@ const Users = new userModel();
 const config = require('../config').token
 
 const login = (req, res, next) => {
-  Users.one(req.body.email)
-    .then((user) => {
-      return bcrypt.compare(req.body.password, user.password);
-    })
-    .then((bool) => {
-      if (!bool) { //
+  const userPromise = Users.one(req.body.email);
+  const comparePromise = userPromise.then((user) => {
+    return bcrypt.compare(req.body.password, user.password);
+  });
+  Promise
+    .all([userPromise, comparePromise])
+    .then((results) => {
+      const user = results[0];
+      const bool = results[1];
+      console.log(user);
+      console.log(bool);
+      if (!bool) {
         res.status(401).json({
           success: false,
           message: 'Authentication failed. Wrong password.'
         });
       }
       else {
-        const token = jwt.sign({ sub: user.id }, config.secret, { 
-          expiresIn: config.expiresIn 
-        })
-        res.status(401).json({
+        const token = jwt.sign({sub: user.id}, config.secret, config.expiresIn);
+        res.status(200).json({
           success: true,
           message: 'Login successful',
           token: token
@@ -42,8 +46,8 @@ const logout = () => {
 
 const register = (req, res, next) => {
   req.body.age = parseInt(req.body.age);
-  const user = new userModel(req.body);
-  user.one(req.body.email)
+  const User = new userModel(req.body);
+  User.one(req.body.email)
     .then((user) => {
       return res.status(401).json({
         status: 'error',

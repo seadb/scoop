@@ -63,9 +63,6 @@ function User(obj) {
       return db.one('SELECT * FROM users WHERE id = $1', id);
     }
   };
-  this.encryptPassword = (next) => {  
-
-  }
 }
 
 module.exports = User;

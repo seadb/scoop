@@ -14,7 +14,9 @@ config.seedDB = true;
 // Token settings
 config.token = {
   secret: process.env.TOKEN_SECRET,
-  expiresIn: process.env.TOKEN_EXPIRES_IN || 60*60*24 //24 hours
+  expiresIn: {
+    expiresIn: process.env.TOKEN_EXPIRES_IN || 60*60*24 //24 hours
+  }
 };
 
 // Server settings
