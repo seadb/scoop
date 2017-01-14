@@ -14,8 +14,6 @@ const login = (req, res, next) => {
     .then((results) => {
       const user = results[0];
       const bool = results[1];
-      console.log(user);
-      console.log(bool);
       if (!bool) {
         res.status(401).json({
           success: false,

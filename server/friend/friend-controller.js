@@ -55,5 +55,18 @@ module.exports = {
       });
   },
   reciprocal: (req, res, next) => {
+    Friends.reciprocal(req.user.id)
+      .then((data) => {
+        res.status(200)
+          .json({
+            status: 'success',
+            data: data,
+            message: 'Retrieved reciprocal friends'
+          });
+      })
+      .catch((err) => {
+        return next(err);
+      });
   }
+
 }

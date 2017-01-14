@@ -30,6 +30,9 @@ function Friend() {
     return db.none(sql, params);
   };
 
+   /* Get a list of users that user A has added as a friend
+    * that have also added user A as a friend
+    */
   this.reciprocal = (userId) => {
 
     var sql = 'SELECT users.* ' +
