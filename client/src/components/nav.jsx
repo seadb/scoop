@@ -1,9 +1,13 @@
 import React, { Component } from 'react';
 
 const Nav = () => (
-  <div className="nav" >
-    <a href="/#/">Home</a>
-  </div>
+  <nav className="nav">
+    <a href="/#/" className="nav__link">
+      <i className="fa fa-home" aria-hidden="true"></i>
+    </a>
+    <a href="/#/" className="nav__link">Login</a>
+    <a href="/#/" className="nav__link">Register</a>
+  </nav>
 );
 
 export default Nav

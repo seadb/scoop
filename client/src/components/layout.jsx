@@ -1,12 +1,16 @@
 import React from 'react'
 //import Routes from '../components/Routes';
 //import Logo from '../components/Logo';
-//import Nav from '../components/Nav';
-//import styles from '../styles.css';
+import Nav from './nav';
 
-const Layout = () => (
+const Layout = (props) => (
   <div>
-    layout goes here
+    <header className="header" >
+      <Nav/>
+    </header>
+    <div className="content">
+      {props.children}
+    </div>
   </div>
 )
 

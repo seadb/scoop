@@ -1,0 +1,21 @@
+.header {
+  font-size: 14px;
+}
+.content {
+  font-weight: bold;
+  padding: 17px;
+}
+.nav {
+  display: flex;
+  background-color: #333;
+}
+.nav__link {
+  font-size: 1.6em;
+  color: white;
+  min-width: 70px;
+  text-align: center;
+}
+.login {
+  width: fit-content;
+  margin: 0 auto;
+}
