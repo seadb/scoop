@@ -1,43 +1,36 @@
-import { combineReducers } from 'redux'
-import { ADD_TODO, TOGGLE_TODO, SET_VISIBILITY_FILTER, VisibilityFilters } from './actions'
-const { SHOW_ALL } = VisibilityFilters
+import { LOGIN, LOGOUT, REGISTER } from './auth-constants'
 
-function visibilityFilter(state = SHOW_ALL, action) {
-  switch (action.type) {
-    case SET_VISIBILITY_FILTER:
-      return action.filter
-    default:
-      return state
-  }
+const initialState = {
+  loggingIn: false,
+  error: null,
+  user: {}
 }
 
-function todos(state = [], action) {
+const authReducer = (state = initialState, action) => {
   switch (action.type) {
-    case ADD_TODO:
-      return [
-        ...state,
-        {
-          text: action.text,
-          completed: false
-        }
-      ]
-    case TOGGLE_TODO:
-      return state.map((todo, index) => {
-        if (index === action.index) {
-          return Object.assign({}, todo, {
-            completed: !todo.completed
-          })
-        }
-        return todo
-      })
-    default:
-      return state
+    case LOGIN:
+      //switch (action.type) {
+      //}
+      if (!action.status) {
+        return Object.assign({}, state, {
+          loggingIn: true
+        })
+      }
+      else if (action.state === "success") {
+        return Object.assign({}, state, {
+          loggingIn: false,
+          user: action.payload
+        })
+      }
+      else if (action.state === "error") {
+        return Object.assign({}, state, {
+          loggingIn: false,
+          error: action.payload
+        })
+      }
+      break;
   }
+  return state
 }
-
-const authReducer = combineReducers({
-  visibilityFilter,
-  todos
-})
 
 export default authReducer

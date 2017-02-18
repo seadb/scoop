@@ -1,21 +1,42 @@
-export const LOGIN = 'LOGIN'
-export const LOGOUT = 'LOGOUT'
-export const REGISTER = 'REGISTER'
+import { LOGIN, LOGOUT, REGISTER } from './auth-constants'
 
-export const VisibilityFilters = {
-  SHOW_ALL: 'SHOW_ALL',
-  SHOW_COMPLETED: 'SHOW_COMPLETED',
-  SHOW_ACTIVE: 'SHOW_ACTIVE'
-}
+const API_URL = '/api'
 
-export function login() {
-  return { type: LOGIN }
-}
+//export function login(status, payload) {
+//  if(status === undefined) {
+//    return {
+//      type: LOGIN
+//    }
+//  else {
+//    return {
+//      type: LOGIN,
+//      status: status,
+//      payload: payload
+//    }
+//  }
+//}
 
-export function logout() {
-  return { type: TOGGLE_TODO, index }
-}
+export function login({ email, password }) {  
 
-export function setVisibilityFilter(filter) {
-  return { type: SET_VISIBILITY_FILTER, filter }
+  return (dispatch) => {
+    dispatch({type: LOGIN});
+    axios.post(`${API_URL}/auth/login`, { email, password })
+    .then(response => {
+      dispatch({
+        type: LOGIN,
+        status: 'success',
+        payload: response.data.user
+      });
+      console.log(response)
+      cookie.save('token', response.data.token, { path: '/' });
+      //window.location.href = CLIENT_ROOT_URL + '/dashboard';
+    })
+    .catch((error) => {
+      dispatch({
+        type: LOGIN,
+        status: 'error',
+        payload: error
+      });
+    });
+  }
 }
