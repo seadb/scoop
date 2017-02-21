@@ -1,5 +1,5 @@
 module.exports = {
-  devtool: 'source-map',
+  devtool: 'cheap-eval-source-map',
   entry: './src/app.js',
   output: {
     filename: 'bundle.js',
@@ -17,5 +17,8 @@ module.exports = {
         presets: ['es2015', 'react']
       }
     }]
+  },
+  devServer: {
+    historyApiFallback: true,
   }
 }

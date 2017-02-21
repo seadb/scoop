@@ -19,3 +19,15 @@
   width: fit-content;
   margin: 0 auto;
 }
+
+a {
+  text-decoration: none;
+}
+
+.button,
+button,
+input[type="submit"],
+input[type="reset"],
+input[type="button"] {
+  margin-top: 0.5rem;
+}

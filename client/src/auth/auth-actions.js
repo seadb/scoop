@@ -1,7 +1,8 @@
 import { LOGIN, LOGOUT, REGISTER } from './auth-constants'
+import axios from 'axios'
+import cookie from 'react-cookie'
 
-const API_URL = '/api'
-
+const API_URL = 'http://localhost:3000/api'
 //export function login(status, payload) {
 //  if(status === undefined) {
 //    return {
@@ -16,8 +17,7 @@ const API_URL = '/api'
 //  }
 //}
 
-export function login({ email, password }) {  
-
+export function login(email, password) {
   return (dispatch) => {
     dispatch({type: LOGIN});
     axios.post(`${API_URL}/auth/login`, { email, password })

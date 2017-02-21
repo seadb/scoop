@@ -16,13 +16,13 @@ const authReducer = (state = initialState, action) => {
           loggingIn: true
         })
       }
-      else if (action.state === "success") {
+      else if (action.status === "success") {
         return Object.assign({}, state, {
           loggingIn: false,
           user: action.payload
         })
       }
-      else if (action.state === "error") {
+      else if (action.status === "error") {
         return Object.assign({}, state, {
           loggingIn: false,
           error: action.payload
