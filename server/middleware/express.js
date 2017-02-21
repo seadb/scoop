@@ -2,6 +2,7 @@ const config = require('../config');
 const morgan = require('morgan');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
+const cors = require('cors');
 
 const session = require('express-session');
 const passport = require('passport');
@@ -39,6 +40,7 @@ function configExpress(app) {
   app.use(cookieParser()); // read cookies (needed for auth)
   app.use(bodyParser.json()); // get information = require( html forms
   app.use(flash());
+  app.use(cors(config.cors));
 
   //app = configSession(app);
   return app;

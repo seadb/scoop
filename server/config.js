@@ -34,5 +34,10 @@ config.pgp = {
   promiseLib: promise
 };
 
+config.cors = {
+  origin: 'http://localhost:8000',
+  optionsSuccessStatus: 200
+}
+
 // Export configuration object
 module.exports = config;
