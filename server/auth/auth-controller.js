@@ -13,6 +13,7 @@ const login = (req, res, next) => {
     .all([userPromise, comparePromise])
     .then((results) => {
       const user = results[0];
+      console.log(user);
       const bool = results[1];
       if (!bool) {
         res.status(401).json({
@@ -56,7 +57,7 @@ const register = (req, res, next) => {
     })
     .catch((err) => {
       if(err.received === 0) {
-        user.save()
+        User.save()
           .then((user) => {
             return jwt.sign({ sub: user.id }, config.secret, {
               expiresIn: config.expiresIn 

@@ -10,6 +10,11 @@ const flash = require('connect-flash');
 const pg = require('pg');
 const connectpg = require('connect-pg-simple');
 
+// simplify way this module operates, ie app.use(express)
+//  const express = [morgan('dev'), cookieParser(), bodyParser.json(), flash(),
+//    cors(config.cors)]
+//  module.exports = express;
+
 function configSession(app) {
   var pgSession = connectpg(session);
   app.use(session({
@@ -45,5 +50,7 @@ function configExpress(app) {
   //app = configSession(app);
   return app;
 }
+
+
 
 module.exports = configExpress;
