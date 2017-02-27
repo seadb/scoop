@@ -1,4 +1,4 @@
 platforms
 plugins
 bundle.js
-bundle.map.js
+bundle.js.map
