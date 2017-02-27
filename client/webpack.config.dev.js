@@ -1,3 +1,5 @@
+const WebpackShellPlugin = require('webpack-shell-plugin');
+
 module.exports = {
   devtool: 'cheap-eval-source-map',
   entry: './src/app.js',
@@ -18,6 +20,13 @@ module.exports = {
       }
     }]
   },
+  plugins: [
+    new WebpackShellPlugin({
+      onBuildExit: [
+        'cordova build'
+      ]
+    })
+  ],
   devServer: {
     historyApiFallback: true,
   }

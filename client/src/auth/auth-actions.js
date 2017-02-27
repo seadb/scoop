@@ -40,3 +40,24 @@ export function login(email, password) {
     });
   }
 }
+
+export function register (firstName, lastName, email, password) {
+  return (dispatch) => {
+    dispatch({type: REGISTER});
+    axios.post(`${API_URL}/auth/register`, { firstName, lastName, email, password })
+    .then(response => {
+      dispatch({
+        type: REGISTER,
+        status: 'success',
+        payload: response.data.user
+      });
+    })
+    .catch((error) => {
+      dispatch({
+        type: REGISTER,
+        status: 'error',
+        payload: error
+      });
+    });
+  }
+}

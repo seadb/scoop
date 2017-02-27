@@ -6,11 +6,12 @@ class Login extends React.Component {
   constructor(props) {
     super(props)
     this.state = {email: '', password: ''}
+    this.baseState = this.state
     this.handleChange = this.handleChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
   }
-  handleChange(event) {
-    const target = event.target;
+  handleChange(e) {
+    const target = e.target;
     this.setState({
       [target.name]: target.value
     });
@@ -18,18 +19,21 @@ class Login extends React.Component {
   handleSubmit(e) {
     e.preventDefault()
     const { dispatch } = this.props
-    console.log(this.state)
     dispatch(login(this.state.email, this.state.password))
+    //this.setState(this.baseState)
+    console.log(this.state)
+    this.props.router.go()
   }
   render () {
     return (
-      <form className="login" id="login" onSubmit={this.handleSubmit}>
+      <form className="center" id="login" onSubmit={this.handleSubmit}>
         <label htmlFor="email">Email</label>
         <input
           className="u-full-width"
           type="email"
           name="email"
           onChange={this.handleChange}
+          value={this.state.email}
         />
         <label htmlFor="password">Password</label>
         <input
@@ -38,6 +42,7 @@ class Login extends React.Component {
           name="password"
           maxLength="20"
           onChange={this.handleChange}
+          value={this.state.password}
         />
         <input 
           className="button-primary u-full-width"
@@ -49,5 +54,11 @@ class Login extends React.Component {
   }
 }
 
-Login = connect()(Login)
+const mapStateToProps = (state) => {
+  console.log(state)
+  return (
+    state
+  )
+}
+Login = connect(mapStateToProps)(Login)
 export default Login

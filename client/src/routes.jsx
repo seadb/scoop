@@ -4,12 +4,15 @@ import Layout from './components/layout'
 //import Contact from '../../contact'
 //<Route path='contact' component={Contact} />
 import Login from './auth/login'
+import Register from './auth/register'
 
 const Routes = () => (
   <Router history={hashHistory}>
     <Route path='/' component={Layout} >
-      <IndexRoute component={Login} />
+      <Route path='login' component={Login} />
+      <Route path='register' component={Register} />
     </Route>
   </Router>
 )
 export default Routes
+//<IndexRoute component={Login} />

@@ -5,8 +5,8 @@ const Nav = () => (
     <a href="/#/" className="nav__link">
       <i className="fa fa-home" aria-hidden="true"></i>
     </a>
-    <a href="/#/" className="nav__link">Login</a>
-    <a href="/#/" className="nav__link">Register</a>
+    <a href="/#/login" className="nav__link">Login</a>
+    <a href="/#/register" className="nav__link">Register</a>
   </nav>
 );
 
