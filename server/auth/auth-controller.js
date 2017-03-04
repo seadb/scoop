@@ -45,7 +45,7 @@ const logout = () => {
 }
 
 const register = (req, res, next) => {
-  req.body.age = parseInt(req.body.age);
+  req.body.age ? parseInt(req.body.age) : '';
   const User = new userModel(req.body);
   User.one(req.body.email)
     .then((user) => {
@@ -56,33 +56,23 @@ const register = (req, res, next) => {
       });
     })
     .catch((err) => {
-      if(err.received === 0) {
-        User.save()
-          .then((user) => {
-            return jwt.sign({ sub: user.id }, config.secret, {
-              expiresIn: config.expiresIn 
-            });
-          })
-          .then((token) => {
-            res.status(200).json({
-              status: 'success',
-              message: 'Registered user and logged in',
-              token: token
-            });
-          })
-          .catch((err) => {
-            res.status(500).json({
-              status: 'error',
-              error: err
-            });
+      User.save()
+        .then((user) => {
+          return jwt.sign({ sub: user.id }, config.secret, config.expiresIn);
+        })
+        .then((token) => {
+          res.status(200).json({
+            status: 'success',
+            message: 'Registered user and logged in',
+            token: token
           });
-      }
-      else {
-        res.status(500).json({
-          status: 'error',
-          error: err
+        })
+        .catch((err) => {
+          res.status(500).json({
+            status: 'error',
+            error: err
+          });
         });
-      }
     })
 }
 
