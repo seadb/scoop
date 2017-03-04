@@ -5,30 +5,37 @@ const bcrypt = require('bcrypt');
 
 const SALT_FACTOR = 5;
 
-//const camelToUnderscore = function(user) {
-//  const newUser = {};
-//  for(const prop in user) {
-//    const newProp = prop.replace(/([a-z])([A-Z])/g, '$1_$2').toLowerCase();
-//    newUser[newProp] = user[prop]
-//  }
-//  return newUser;
-//}
+// Uses props from User.fields to generate insert SQL statement
+const generateSQL = function(props) {
+  let columns = ''
+  let values = ''
+  for (const prop in props) {
+    values = values + '${' + prop + '}, '
+    const newProp = prop.replace(/([a-z])([A-Z])/g, '$1_$2').toLowerCase()
+    columns = columns + newProp + ', '
+  }
+  columns = columns.slice(0, columns.length-2)
+  values = values.slice(0, values.length-2)
+  const sql ='INSERT INTO users (' + columns + ') VALUES (' + values + ') '
+    + 'RETURNING *'
+  return sql
+}
 
 function User(obj) {
-
-  this.id = '';
-  this.email = '';
-  this.password = '';
-  this.firstName = '';
-  this.lastName = '';
-  this.bio = '';
-  this.age = 0;
-  this.sex = ''
-  this.created = null;
+  
+  this.fields = {
+    email: '',
+    password: '',
+    firstName: '',
+    lastName: '',
+    bio: '',
+    age: 0,
+    sex: ''
+  }
 
   for (const prop in obj) {
-    if (this.hasOwnProperty(prop)) {
-      this[prop] = obj[prop];
+    if (this.fields.hasOwnProperty(prop)) {
+      this.fields[prop] = obj[prop]
     }
   }
 
@@ -36,34 +43,28 @@ function User(obj) {
     //const sql ='INSERT INTO users(email, password, first_name, last_name, bio, ' +
     //  'age, sex) VALUES(${email}, ${password}, ${firstName}, ${lastName}, ' +
     //  '${bio}, ${age}, ${sex})' 
-    return bcrypt.genSalt(SALT_FACTOR)
-      .then( (err, salt) => {
-        if (err) throw err;
-        return bcrypt.hash(this.password, salt);
-      })
-      .then((err, hash) => {
-        if (err) throw err;
-        this.password = hash;
-        const sql ='INSERT INTO users (email, password, first_name) VALUES (${email}' +
-        ', ${password}, ${firstName}) RETURNING *';
-        console.log(this);
-        return db.one(sql, this);
+
+    const sql = generateSQL(this.fields)
+    return bcrypt.hash(this.fields.password, SALT_FACTOR)
+      .then((hash) => {
+        this.fields.password = hash
+        return db.one(sql, this.fields)
       });
   }
   this.all = function() {
-    return db.any('SELECT * FROM users');
+    return db.any('SELECT * FROM users')
   };
   this.one = function(input) {
     if (typeof(input) === "string") {
       const email = input
-      return db.one('SELECT * FROM users WHERE email = $1', email);
+      return db.one('SELECT * FROM users WHERE email = $1', email)
     }
     else if (typeof(input) === "number") {
-      const id = input;
-      return db.one('SELECT * FROM users WHERE id = $1', id);
+      const id = input
+      return db.one('SELECT * FROM users WHERE id = $1', id)
     }
   };
 }
 
-module.exports = User;
+module.exports = User
 
