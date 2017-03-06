@@ -11,18 +11,18 @@ const testUser = {
 test('Users Model - Save - First Name', function (t) {
   t.plan(1)
   const User = new userModel(testUser);
-  return User.save()
+  User.save()
     .then( function success(result) {
-      return t.equal(result.first_name, testUser.firstName);
+      t.equal(result.first_name, testUser.firstName);
     })
 });
 
 test('Users Model - Save - Last Name', function (t) {
   t.plan(1)
   const User = new userModel(testUser);
-  return User.save()
+  User.save()
     .then( function success(result) {
-      return t.equal(result.last_name, testUser.lastName);
+      t.equal(result.last_name, testUser.lastName);
     }
   )
 });
@@ -30,9 +30,9 @@ test('Users Model - Save - Last Name', function (t) {
 test('User Model - Save - Email', function (t) {
   t.plan(1)
   const User = new userModel(testUser);
-  return User.save()
+  User.save()
     .then(function success(result) {
-      return t.equal(result.email, testUser.email);
+      t.equal(result.email, testUser.email);
     }
   )
 });
