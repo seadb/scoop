@@ -84,5 +84,4 @@ class Register extends React.Component {
 
 const mapStateToProps = (state) => (state)
 
-Register = connect(mapStateToProps)(Register)
-export default Register
+export default connect(mapStateToProps)(Register)

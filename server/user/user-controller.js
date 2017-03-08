@@ -7,12 +7,15 @@ const all = (req, res, next) => {
       res.status(200)
         .json({
           status: 'success',
-          data: data,
+          user: data,
           message: 'Retrieved ALL users'
         });
     })
     .catch(function (err) {
-      return next(err);
+      res.json({
+        status: 'error',
+        message: 'Failed to retrieve users'
+      })
     });
 }
 
@@ -24,7 +27,7 @@ const byID = (req, res, next) => {
       res.status(200)
         .json({
           status: 'success',
-          data: data,
+          user: data,
           message: 'Retrieved one user'
         });
     })
@@ -40,7 +43,7 @@ const byEmail = (req, res, next) => {
       res.status(200)
         .json({
           status: 'success',
-          data: data,
+          user: data,
           message: 'Retrieved ONE user'
         });
     })

@@ -38,8 +38,9 @@ var whitelist = ['http://localhost:8000', 'http://localhost:8100']
 
 config.cors = {
   origin: (origin, callback) => {
+    var error = 'Request to '+ origin +' not valid'
     const inWhitelist = whitelist.indexOf(origin) > -1
-    callback(inWhitelist ? null : 'Bad Request', inWhitelist)
+    callback(inWhitelist ? null : error, inWhitelist)
   },
   optionsSuccessStatus: 200
 }
