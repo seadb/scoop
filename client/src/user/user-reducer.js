@@ -1,34 +1,28 @@
 import { GET_USER } from './user-constants'
+import reducer from '../redux/reducer'
 
 const initialState = {
   loading: false,
-  error: null,
-  user: {}
+  data: {},
+  error: null
 }
 
 const userReducer = (state = initialState, action) => {
   switch (action.type) {
     case GET_USER:
-      if (!action.status) {
-        return Object.assign({}, state, {
-          loading: true
-        })
+      const loading = { loading: true}
+      const success = {
+        loading: false,
+        data: action.payload
       }
-      else if (action.status === "success") {
-        return Object.assign({}, state, {
-          loading: false,
-          user: action.user
-        })
+      const error = {
+        loading: false,
+        error: action.error
       }
-      else if (action.status === "error") {
-        return Object.assign({}, state, {
-          loading: false,
-          error: action.error
-        })
-      }
-      break;
+      return reducer(state, action, loading, success, error)
+    default:
+      return state
   }
-  return state
 }
 
 export default userReducer
