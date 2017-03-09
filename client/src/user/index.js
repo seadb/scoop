@@ -4,24 +4,21 @@ import { getUser } from './user-actions'
 import Profile from './profile'
 
 class User extends React.Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-      user: {}
-    }
-  }
   componentDidMount() {
     this.props.dispatch(getUser(this.props.params.id))
   }
   render() {
+    console.log(this.props.user)
     return (
-      <Profile user={this.state.user} id={this.props.params.id} />
+      <Profile user={this.props.user} id={this.props.params.id} />
     )
   }
 }
 
 const mapStateToProps = (state) => {
-  console.log(state)
-  return ({user: state.user})
+  return ({
+    loading: state.loading,
+    error: state.error,
+    user: state.user.data})
 }
-export default connect( )(User)
+export default connect(mapStateToProps)(User)

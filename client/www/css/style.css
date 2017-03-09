@@ -1,10 +1,38 @@
+.fa { margin: 0 0.5em; }
+/* colors */
+.red { color: #dc322f; }
+.orange { color: #cb4b16; }
+.yellow { color: #b58900; }
+.green { color: #859900; }
+.cyan { color: #2aa198; }
+.blue { color: #268bd2; }
+.violet { color: #6c71c4; }
+.magenta { color: #d33682; }
+.base04 { color: #002b36; }
+.base03 { color: #073642; }
+.base02 { color: #0c5566; }
+.base01 { color: #586e75; }
+.base00 { color: #657b83; }
+.base0 { color: #839496; }
+.base1 { color: #93a1a1; }
+.base2 { color: #eee8d5; }
+.base3 { color: #fdf6e3; }
+.grey-eight { color: #888; }
+.grey-four { color: #444; }
+.red-bg{ background-color: #dc322f; }
+.orange-bg { background-color: #cb4b16; }
+.yellow-bg { background-color: #b58900; }
+.green-bg { background-color: #859900; }
+.cyan-bg { background-color: #2aa198; }
+.blue-bg { background-color: #268bd2; }
+.violet-bg { background-color: #6c71c4; }
+.magenta-bg { background-color: #d33682; }
 .header {
   font-size: 14px;
 }
 .content {
-  font-weight: bold;
-  padding: 17px;
 }
+.padded { padding: 20px; }
 .nav {
   display: flex;
   background-color: #333;
@@ -31,3 +59,62 @@ input[type="reset"],
 input[type="button"] {
   margin-top: 0.5rem;
 }
+
+.profile__banner {
+  background-color: #3F3F3F;
+  height: 15rem;
+}
+.profile__icon {
+  display: block;
+  object-fit: cover;
+  border-radius: 50%;
+  margin: 2.5rem auto;
+  width: 20rem;
+  position: absolute;
+  left: 0;
+  right: 0;
+}
+
+.profile__content {
+  color: #404040;
+  margin: 7.5rem 5rem 2rem 5rem;
+}
+.profile__name {
+  font-size: 3.2rem;
+  line-height: 1.3em;
+  text-align: center;
+}
+.profile__username {
+  text-align: center;
+}
+.profile__bio {
+  text-align: justify;
+}
+
+.trips {
+
+}
+
+.trips__title {
+  letter-spacing: .05em;
+}
+.trip:hover {
+  background-color: #DDD;
+}
+
+
+/* Larger than mobile */
+@media (min-width: 400px) {}
+
+/* Larger than phablet (also point when grid becomes active) */
+@media (min-width: 550px) {}
+
+/* Larger than tablet */
+@media (min-width: 750px) {}
+
+/* Larger than desktop */
+@media (min-width: 1000px) {}
+
+/* Larger than Desktop HD */
+@media (min-width: 1200px) {}
+

@@ -1,5 +1,6 @@
 'use strict';
 const promise = require('bluebird');
+const humps = require('humps');
 
 var config = {};
 
@@ -30,8 +31,25 @@ config.postgres = {
   connectionString: process.env.POSTGRES_CONNECTION_STRING
 };
 
+function camelizeColumnNames(data) {
+  var template = data[0];
+  for (var prop in template) {
+    var camel = humps.camelize(prop);
+    if (!(camel in template)) {
+      for (var i = 0; i < data.length; i++) {
+        var d = data[i];
+        d[camel] = d[prop];
+        delete d[prop];
+      }
+    }
+  }
+}
+
 config.pgp = {
-  promiseLib: promise
+  promiseLib: promise,
+  receive: function (data) {
+    camelizeColumnNames(data)
+  }
 };
 
 var whitelist = ['http://localhost:8000', 'http://localhost:8100']
