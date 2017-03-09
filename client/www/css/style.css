@@ -1,3 +1,5 @@
+
+/* font awesome spacing */
 .fa { margin: 0 0.5em; }
 /* colors */
 .red { color: #dc322f; }
@@ -28,6 +30,20 @@
 .blue-bg { background-color: #268bd2; }
 .violet-bg { background-color: #6c71c4; }
 .magenta-bg { background-color: #d33682; }
+
+/* reusable spacing classes */
+.naked { margin: 0; padding: 0; border: 0; }
+.no-margin-right { margin-right: 0; }
+.no-margin-left { margin-left: 0; }
+
+.non-mobile {
+  display: none;
+}
+@media (min-width: 550px) {
+  .mobile { display: none; }
+  .non-mobile { display: block; }
+}
+
 .header {
   font-size: 14px;
 }
@@ -37,6 +53,7 @@
 .nav {
   display: flex;
   justify-content: space-between;
+  align-items: center;
   padding: 1rem;
 }
 .nav__link {
@@ -54,14 +71,6 @@ a {
   text-decoration: none;
 }
 
-.button,
-button,
-input[type="submit"],
-input[type="reset"],
-input[type="button"] {
-  margin: 0;
-}
-
 .profile__banner {
   background-color: #3F3F3F;
   height: 15rem;
@@ -70,6 +79,7 @@ input[type="button"] {
 
 .profile__add-friend {
   color: #fdf6e3;
+  font-size: 13px;
   padding-left: 0.5rem;
   padding-right: 1rem;
   position: absolute;
@@ -78,8 +88,8 @@ input[type="button"] {
 }
 
 .profile__add-friend:hover {
-  background-color: #000;
-  color: #fdf6e3;
+  background-color: white;
+  color: #333;
 }
 
 .profile__icon {
@@ -101,23 +111,12 @@ input[type="button"] {
   line-height: 1.3em;
   text-align: center;
 }
-.profile__username {
-  text-align: center;
-}
-.profile__bio {
-  text-align: justify;
-}
+.profile__username { text-align: center; }
+.profile__bio {  text-align: justify; }
 
-.trips {
-
-}
-
-.trips__title {
-  letter-spacing: .05em;
-}
-.trip:hover {
-  background-color: #DDD;
-}
+.trips__title { letter-spacing: .05em; }
+.trip { transition: 1s ease;}
+.trip:hover { background-color: #DDD; }
 
 .trip__location {
   width: 100%;
