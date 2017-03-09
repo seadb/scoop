@@ -1,17 +1,21 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { getUser } from './user-actions'
+import Profile from './profile'
 
 class User extends React.Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      user: {}
+    }
+  }
   componentDidMount() {
     this.props.dispatch(getUser(this.props.params.id))
   }
   render() {
     return (
-      <div>
-        user profile
-        {this.props.params.id}
-      </div>
+      <Profile user={this.state.user} id={this.props.params.id} />
     )
   }
 }

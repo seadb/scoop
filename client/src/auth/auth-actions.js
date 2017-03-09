@@ -1,7 +1,7 @@
 import { LOGIN, LOGOUT, REGISTER } from './auth-constants'
 import axios from 'axios'
 import cookie from 'react-cookie'
-import { API_URL } from '../config'
+import { API_URL, CLIENT_ROOT_URL } from '../config'
 
 export function login(email, password) {
   return (dispatch) => {
@@ -15,7 +15,7 @@ export function login(email, password) {
       });
       console.log(response)
       cookie.save('token', response.data.token, { path: '/' });
-      //window.location.href = CLIENT_ROOT_URL + '/dashboard';
+      window.location.href = CLIENT_ROOT_URL + '/' + response.data.user.id;
     })
     .catch((error) => {
       dispatch({
@@ -37,6 +37,8 @@ export function register (firstName, lastName, email, password) {
         status: 'success',
         payload: response.data.user
       });
+      cookie.save('token', response.data.token, { path: '/' });
+      window.location.href = CLIENT_ROOT_URL + '/' + response.data.user.id;
     })
     .catch((error) => {
       dispatch({

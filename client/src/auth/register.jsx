@@ -1,8 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import Field from '../components/field'
-import Form from '../components/form'
 import { register } from './auth-actions'
+import RegisterForm from './register-form'
 
 class Register extends React.Component {
   constructor(props) {
@@ -28,37 +27,20 @@ class Register extends React.Component {
     const { dispatch } = this.props
     const state = this.state
     dispatch(register(state.firstName, state.lastName, state.email, state.password))
-    //this.setState(this.baseState)
+    this.setState(this.baseState)
     console.log(this.state)
     //this.props.router.go()
   }
   render() {
     return (
-      <Form formClass="center" id="register" handleSubmit={this.handleSubmit}
-        buttonText="Register" buttonClass="button-primary u-full-width">
-        <div className="row">
-          <div className="six columns">
-            <Field label="First Name" inputClass="u-full-width" type="text"
-              name="firstName" maxLength="255" handleChange={this.handleChange}
-              value={this.state.firstName}
-            />
-          </div>
-          <div className="six columns">
-            <Field label="Last Name" inputClass="u-full-width" type="text"
-              name="lastName" maxLength="255" handleChange={this.handleChange}
-              value={this.state.lastName}
-            />
-          </div>
-        </div>
-        <Field label="Email" inputClass="u-full-width" type="email"
-          name="email" maxLength="255" handleChange={this.handleChange}
-          value={this.state.email}
-        />
-        <Field label="Password" inputClass="u-full-width" type="password"
-          name="password" maxLength="20" handleChange={this.handleChange}
-          value={this.state.password}
-        />
-      </Form>
+      <RegisterForm 
+        handleChange={this.handleChange}
+        handleSubmit={this.handleSubmit}
+        firstName={this.state.firstName}
+        lastName={this.state.lastName}
+        email={this.state.email}
+        password={this.state.password}
+      />
     )
   }
 }
