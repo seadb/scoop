@@ -8,6 +8,7 @@
 .blue { color: #268bd2; }
 .violet { color: #6c71c4; }
 .magenta { color: #d33682; }
+.white { color: white; }
 .base04 { color: #002b36; }
 .base03 { color: #073642; }
 .base02 { color: #0c5566; }
@@ -35,11 +36,12 @@
 .padded { padding: 20px; }
 .nav {
   display: flex;
-  background-color: #333;
+  justify-content: space-between;
+  padding: 1rem;
 }
 .nav__link {
-  font-size: 1.6em;
-  color: white;
+  color: #073642;
+  font-size: 1.5rem;
   min-width: 70px;
   text-align: center;
 }
@@ -57,13 +59,29 @@ button,
 input[type="submit"],
 input[type="reset"],
 input[type="button"] {
-  margin-top: 0.5rem;
+  margin: 0;
 }
 
 .profile__banner {
   background-color: #3F3F3F;
   height: 15rem;
+  position: relative;
 }
+
+.profile__add-friend {
+  color: #fdf6e3;
+  padding-left: 0.5rem;
+  padding-right: 1rem;
+  position: absolute;
+  right: 1rem;
+  top: 1rem;
+}
+
+.profile__add-friend:hover {
+  background-color: #000;
+  color: #fdf6e3;
+}
+
 .profile__icon {
   display: block;
   object-fit: cover;
@@ -74,7 +92,6 @@ input[type="button"] {
   left: 0;
   right: 0;
 }
-
 .profile__content {
   color: #404040;
   margin: 7.5rem 5rem 2rem 5rem;
@@ -100,6 +117,13 @@ input[type="button"] {
 }
 .trip:hover {
   background-color: #DDD;
+}
+
+.trip__location {
+  width: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 

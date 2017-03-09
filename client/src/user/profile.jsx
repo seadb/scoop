@@ -7,6 +7,10 @@ const Profile = (props) => {
   <div className="profile">
     <div className="profile__banner">
       <img src="img/icon.jpg" className="profile__icon"/>
+      <button className="button profile__add-friend">
+        <i className="fa fa-plus" aria-hidden="true"></i>
+        Add Friend
+    </button>
     </div>
     <div className="profile__content">
       <div className="profile__name">

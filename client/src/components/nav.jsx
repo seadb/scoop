@@ -6,7 +6,7 @@ const Nav = () => (
       <i className="fa fa-home" aria-hidden="true"></i>
     </a>
     <a href="/#/login" className="nav__link">Login</a>
-    <a href="/#/register" className="nav__link">Register</a>
+    <button href="/#/register" className="button green-bg white">Register</button>
   </nav>
 );
 
