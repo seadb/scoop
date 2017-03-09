@@ -1,56 +1,81 @@
 import { LOGIN, LOGOUT, REGISTER } from './auth-constants'
+import reducer from '../redux/reducer'
 
 const initialState = {
-  loggingIn: false,
-  registering: false,
-  error: null,
-  user: {}
+  user: null,
+  login: { 
+    loading: false,
+    error: null
+  },
+  register: {
+    loading: false,
+    error: null
+  }
 }
 
 const authReducer = (state = initialState, action) => {
   switch (action.type) {
     case LOGIN:
-      //switch (action.type) {
-      //}
-      if (!action.status) {
-        return Object.assign({}, state, {
-          loggingIn: true
-        })
+      let loading = { login: { loading: true }}
+      let success = {
+        user: action.payload,
+        login: { loading: false }
       }
-      else if (action.status === "success") {
-        return Object.assign({}, state, {
-          loggingIn: false,
-          user: action.payload
-        })
-      }
-      else if (action.status === "error") {
-        return Object.assign({}, state, {
-          loggingIn: false,
+      let error = {
+        login: {
+          loading: false,
           error: action.payload
-        })
+        }
       }
-      break;
+      return reducer(state, action, loading, success, error)
+      break
+//      else if (action.status === "success") {
+//        return Object.assign({}, state, {
+//          loggingIn: false,
+//          user: action.payload
+//        })
+//      }
+//      else if (action.status === "error") {
+//        return Object.assign({}, state, {
+//          loggingIn: false,
+//          error: action.payload
+//        })
+//      }
     case REGISTER:
-      if (!action.status) {
-        return Object.assign({}, state, {
-          registering: true
-        })
+      const regLoading = { register: { loading: true }}
+      const regSuccess = {
+        user: action.payload,
+        register: { loading: false }
+
       }
-      else if (action.status === "success") {
-        return Object.assign({}, state, {
-          registering: false,
-          user: action.payload
-        })
-      }
-      else if (action.status === "error") {
-        return Object.assign({}, state, {
-          registering: false,
+      const regError = {
+        register: {
+          loading: false,
           error: action.payload
-        })
+        }
       }
-      break;
+      return reducer(state, action, regLoading, regSuccess, regError)
+      break
+//      if (!action.status) {
+//        return Object.assign({}, state, {
+//          registering: true
+//        })
+//      }
+//      else if (action.status === "success") {
+//        return Object.assign({}, state, {
+//          registering: false,
+//          user: action.payload
+//        })
+//      }
+//      else if (action.status === "error") {
+//        return Object.assign({}, state, {
+//          registering: false,
+//          error: action.payload
+//        })
+//      }
+      default:
+        return state
   }
-  return state
 }
 
 export default authReducer

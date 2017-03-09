@@ -6,14 +6,13 @@ const config = require('../config').token
 
 const login = (req, res, next) => {
   const userPromise = Users.one(req.body.email);
-  const comparePromise = userPromise.then((user) => {
+  const compare = userPromise.then((user) => {
     return bcrypt.compare(req.body.password, user.password);
   });
   Promise
-    .all([userPromise, comparePromise])
+    .all([userPromise, compare])
     .then((results) => {
       const user = results[0];
-      console.log(user);
       const bool = results[1];
       if (!bool) {
         res.status(401).json({
@@ -56,15 +55,17 @@ const register = (req, res, next) => {
       });
     })
     .catch((err) => {
-      User.save()
-        .then((user) => {
+      const user = User.save()
+      const token = user.then((user) => {
           return jwt.sign({ sub: user.id }, config.secret, config.expiresIn);
         })
-        .then((token) => {
+      Promise.all([user, token])
+        .then((results) => {
           res.status(200).json({
             status: 'success',
             message: 'Registered user and logged in',
-            token: token
+            token: results[1],
+            user: results[0]
           });
         })
         .catch((err) => {
