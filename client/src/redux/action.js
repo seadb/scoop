@@ -2,17 +2,27 @@
  * dispatching actions based on the response
  */
 
-const action = (dispatch, request, type, url, payload) => {
+const requestPromise = (request, body, url) => {
+  if(body) {
+    return request(url, body)
+  }
+  else {
+    return request(url)
+  }
+}
+
+const action = ({dispatch, request, body, type, url, redirect}) => {
   dispatch({type: type});
-  request(url)
+  requestPromise(request, body, url)
   .then(response => {
     dispatch({
       type: type,
       status: 'success',
-      payload: eval(payload)
+      data: response.data
     });
-    console.log(response)
-    //window.location.href = CLIENT_ROOT_URL + '/dashboard';
+    if(redirect) {
+      window.location.href = redirect;
+    }
   })
   .catch((error) => {
     dispatch({

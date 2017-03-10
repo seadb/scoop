@@ -13,7 +13,7 @@ const userReducer = (state = initialState, action) => {
       const loading = { loading: true}
       const success = {
         loading: false,
-        data: action.payload
+        data: action.data
       }
       const error = {
         loading: false,

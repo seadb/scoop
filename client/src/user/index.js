@@ -17,8 +17,9 @@ class User extends React.Component {
 
 const mapStateToProps = (state) => {
   return ({
-    loading: state.loading,
-    error: state.error,
-    user: state.user.data})
+    loading: state.user.loading,
+    error: state.user.error,
+    user: state.user.data
+  })
 }
 export default connect(mapStateToProps)(User)

@@ -25,12 +25,12 @@ module.exports = {
   all: (req, res, next) => {
     Friends.all(req.user.id)
       .then((data) => {
-        res.status(200)
-          .json({
-            status: 'success',
-            data: data,
-            message: 'Retrieved ALL friends'
-          });
+        res.status(200).json(data)
+        //  .json({
+        //    status: 'success',
+        //    data: data,
+        //    message: 'Retrieved ALL friends'
+        //  });
       })
       .catch((err) => {
         return next(err);
@@ -43,12 +43,12 @@ module.exports = {
         return Friends.delete(req.user.id, id);
       })
       .then((data) => {
-        res.status(200)
-          .json({
-            status: 'success',
-            data: data,
-            message: 'Deleted friend ' + req.params.id
-          });
+        res.status(200).json(data)
+          //.json({
+          //  status: 'success',
+          //  data: data,
+          //  message: 'Deleted friend ' + req.params.id
+          //});
       })
       .catch((err) => {
         return next(err);

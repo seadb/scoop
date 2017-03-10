@@ -1,3 +1,15 @@
+const generateStates = (action) => ({
+  loading: { loading: true },
+  success: {
+    loading: false,
+    data: action.data
+  },
+  error: {
+    loading: false,
+    error: action.error
+  }
+})
+
 const reducer = (state, action, loadingState, successState, errorState) => {
   switch (action.status) {
     case undefined:
@@ -11,5 +23,5 @@ const reducer = (state, action, loadingState, successState, errorState) => {
       return Object.assign({}, state, errorState)
   }
 }
-
+export { generateStates }
 export default reducer
