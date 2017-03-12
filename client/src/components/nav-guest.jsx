@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-const Nav = () => (
+const NavGuest = () => (
   <nav className="nav">
     <div className="nav__left">
       <a href="/#/" className="nav__link">
@@ -18,4 +18,4 @@ const Nav = () => (
   </nav>
 );
 
-export default Nav
+export default NavGuest

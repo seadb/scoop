@@ -1,7 +1,9 @@
 import { ADD_FRIEND } from './friend-constants'
-import axios from 'axios'
+import cookie from 'react-cookie'
 import { API_URL, CLIENT_ROOT_URL } from '../config'
 import action from '../redux/action'
+import config from '../config'
+const axios = config.axios(cookie.load('token'))
 
 export function addFriend(user, id) {
   return (dispatch) => {
@@ -10,7 +12,7 @@ export function addFriend(user, id) {
       request: axios.post,
       body: user,
       type: ADD_FRIEND,
-      url: `${API_URL}/friends/add/${id}`,
+      url: `/friends/add/${id}`,
       redirect: CLIENT_ROOT_URL
     });
   }

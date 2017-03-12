@@ -39,9 +39,17 @@
 .non-mobile {
   display: none;
 }
-@media (min-width: 550px) {
+@media (min-width: 450px) {
   .mobile { display: none; }
   .non-mobile { display: block; }
+}
+
+.icon {
+  transition: 1s ease;
+}
+.icon:hover {
+  color: white;
+  background-color: black;
 }
 
 .header {

@@ -10,8 +10,9 @@ class App extends React.Component {
     this.props.dispatch(verify(cookie.load('token')))
   }
   render() {
+    console.log(this.props.auth)
     return (
-      <Layout>
+      <Layout auth={this.props.auth}>
         {this.props.children}
       </Layout>
     )

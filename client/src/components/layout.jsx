@@ -1,18 +1,21 @@
 import React from 'react'
 //import Routes from '../components/Routes';
 //import Logo from '../components/Logo';
-import Nav from './nav';
+import NavGuest from './nav-guest';
+import NavUser from './nav-user';
 
-const Layout = (props) => (
-  <div>
-    <header className="header" >
-      <Nav/>
-    </header>
-    <div className="content">
-      {props.children}
+const Layout = (props) => {
+  return (
+    <div>
+      <header className="header">
+        {props.auth.user ? <NavUser id={props.auth.user.id}/> : <NavGuest/>}
+      </header>
+      <div className="content">
+        {props.children}
+      </div>
     </div>
-  </div>
-)
+  )
+}
 
 /*
     <div className={styles.header} >

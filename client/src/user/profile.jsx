@@ -3,10 +3,8 @@ import Trip from '../trips/trip'
 
 const Profile = (props) => {
   console.log(props.user)
-  return (
-  <div className="profile">
-    <div className="profile__banner">
-      <img src="img/icon.jpg" className="profile__icon"/>
+  const addFriend = (
+    <div>
       <button
         onClick={props.addFriend} 
         className="button profile__add-friend mobile"
@@ -21,6 +19,13 @@ const Profile = (props) => {
           <i className="fa fa-plus" aria-hidden="true"></i>
           Add Friend
       </button>
+    </div>
+  )
+  return (
+  <div className="profile">
+    <div className="profile__banner">
+      <img src="img/icon.jpg" className="profile__icon"/>
+      {addFriend}
     </div>
     <div className="profile__content">
       <div className="profile__name">
