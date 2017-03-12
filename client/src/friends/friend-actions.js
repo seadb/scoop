@@ -3,16 +3,28 @@ import axios from 'axios'
 import { API_URL, CLIENT_ROOT_URL } from '../config'
 import action from '../redux/action'
 
-export function addFriend(id, user) {
+export function addFriend(user, id) {
   return (dispatch) => {
-    action(dispatch, axios.post, user, ADD_FRIEND, `${API_URL}/friends/add/${id}`,
-           'response.data', CLIENT_ROOT_URL);
+    action({
+      dispatch,
+      request: axios.post,
+      body: user,
+      type: ADD_FRIEND,
+      url: `${API_URL}/friends/add/${id}`,
+      redirect: CLIENT_ROOT_URL
+    });
   }
 }
 
 export function deleteFriend(id, user) {
   return (dispatch) => {
-    action(dispatch, axios.post, user, DELETE_FRIEND, `${API_URL}/friends/delete/${id}`,
-           'response.data', CLIENT_ROOT_URL);
+    action({
+      dispatch,
+      request: axios.post,
+      body: user,
+      type: DELETE_FRIEND,
+      url: `${API_URL}/friends/delete/${id}`,
+      redirect: CLIENT_ROOT_URL
+    });
   }
 }

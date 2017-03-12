@@ -7,11 +7,17 @@ const Profile = (props) => {
   <div className="profile">
     <div className="profile__banner">
       <img src="img/icon.jpg" className="profile__icon"/>
-      <button className="button profile__add-friend mobile">
+      <button
+        onClick={props.addFriend} 
+        className="button profile__add-friend mobile"
+      >
         <i className="fa fa-plus no-margin-right" aria-hidden="true"></i>
         <i className="fa fa-user no-margin-left" aria-hidden="true"></i>
       </button>
-      <button className="button profile__add-friend non-mobile">
+      <button
+        onClick={props.addFriend}
+        className="button profile__add-friend non-mobile"
+      >
           <i className="fa fa-plus" aria-hidden="true"></i>
           Add Friend
       </button>

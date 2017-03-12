@@ -18,4 +18,4 @@ const friendReducer = (state = initialState, action) => {
   }
 }
 
-export default userReducer
+export default friendReducer
