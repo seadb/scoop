@@ -1,4 +1,4 @@
-import { LOGIN, LOGOUT, REGISTER } from './auth-constants'
+import { LOGIN, LOGOUT, REGISTER, VERIFY } from './auth-constants'
 import reducer from '../redux/reducer'
 
 const initialState = {
@@ -10,6 +10,10 @@ const initialState = {
   register: {
     loading: false,
     error: null
+  },
+  verify: {
+    loading: false,
+    error: null
   }
 }
 
@@ -18,13 +22,13 @@ const authReducer = (state = initialState, action) => {
     case LOGIN:
       let loading = { login: { loading: true }}
       let success = {
-        user: action.payload,
+        user: action.data,
         login: { loading: false }
       }
       let error = {
         login: {
           loading: false,
-          error: action.payload
+          error: action.error
         }
       }
       return reducer(state, action, loading, success, error)
@@ -44,17 +48,31 @@ const authReducer = (state = initialState, action) => {
     case REGISTER:
       const regLoading = { register: { loading: true }}
       const regSuccess = {
-        user: action.payload,
+        user: action.data,
         register: { loading: false }
 
       }
       const regError = {
         register: {
           loading: false,
-          error: action.payload
+          error: action.error
         }
       }
       return reducer(state, action, regLoading, regSuccess, regError)
+      break
+    case VERIFY:
+      const verLoading = { verify: { loading: true }}
+      const verSuccess = {
+        user: action.data,
+        verify: { loading: false }
+      }
+      const verError = {
+        verify: {
+          loading: false,
+          error: action.error
+        }
+      }
+      return reducer(state, action, verLoading, verSuccess, verError)
       break
 //      if (!action.status) {
 //        return Object.assign({}, state, {

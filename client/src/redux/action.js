@@ -33,4 +33,25 @@ const action = ({dispatch, request, body, type, url, redirect}) => {
   });
 }
 
+
+const actioncb = ({dispatch, request, body, type, url, cb}) => {
+  dispatch({type: type});
+  requestPromise(request, body, url)
+  .then(response => {
+    dispatch({
+      type: type,
+      status: 'success',
+      data: response.data
+    });
+    cb(response)
+  })
+  .catch((error) => {
+    dispatch({
+      type: type,
+      status: 'error',
+      error: error
+    });
+  });
+}
 export default action
+export { actioncb }
