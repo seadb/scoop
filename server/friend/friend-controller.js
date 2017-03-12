@@ -11,15 +11,18 @@ module.exports = {
         return Friends.add(req.user.id, id);
       })
       .then((data) => {
-        res.status(200)
-          .json({
-            status: 'success',
-            data: data,
-            message: 'Added ' + req.params.id + ' as a friend'
-          });
+        res.status(200).json(data)
+        //  .json({
+        //    status: 'success',
+        //    data: data,
+        //    message: 'Added ' + req.params.id + ' as a friend'
+        //  });
       })
-      .catch((err) => {
-        return next(err);
+      .catch((error) => {
+        res.status(500).json({
+          error: error,
+          message: 'Failed to add ' + req.params.id + ' as a friend'
+        })
       });
   },
   all: (req, res, next) => {
@@ -32,8 +35,11 @@ module.exports = {
         //    message: 'Retrieved ALL friends'
         //  });
       })
-      .catch((err) => {
-        return next(err);
+      .catch((error) => {
+        res.status(500).json({
+          error: error,
+          message: 'Failed to fetch all friends'
+        })
       });
   },
   delete: (req, res, next) => {
@@ -50,22 +56,28 @@ module.exports = {
           //  message: 'Deleted friend ' + req.params.id
           //});
       })
-      .catch((err) => {
-        return next(err);
+      .catch((error) => {
+        res.status(500).json({
+          error: error,
+          message: 'Failed to delete friend ' + req.params.id
+        })
       });
   },
   reciprocal: (req, res, next) => {
     Friends.reciprocal(req.user.id)
       .then((data) => {
-        res.status(200)
-          .json({
-            status: 'success',
-            data: data,
-            message: 'Retrieved reciprocal friends'
-          });
+        res.status(200).json(data)
+        //  .json({
+        //    status: 'success',
+        //    data: data,
+        //    message: 'Retrieved reciprocal friends'
+        //  });
       })
-      .catch((err) => {
-        return next(err);
+      .catch((error) => {
+        res.status(500).json({
+          error: error,
+          message: 'Failed to fetch reciprocal friends'
+        })
       });
   }
 

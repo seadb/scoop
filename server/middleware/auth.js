@@ -4,9 +4,10 @@ const jwt = require('jsonwebtoken');
 const config = require('../config');
 
 const authenticate = (req, res, next) => {
+  console.log(req.headers)
   if (!(req.headers && req.headers.authorization)) {
     return res.status(400).json({
-      status: 'Please log in'
+      message: 'Please log in'
     });
   }
   // decode the token
@@ -15,7 +16,7 @@ const authenticate = (req, res, next) => {
   jwt.verify(req.headers.authorization, config.token.secret, (err, decoded) => {
     if (err) {
       return res.status(401).json({
-        status: 'Token has expired'
+        message: 'Token has expired'
       });
     }
     else {
