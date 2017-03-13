@@ -2,7 +2,16 @@ import { LOGIN, LOGOUT, REGISTER, VERIFY } from './auth-constants'
 import reducer from '../redux/reducer'
 
 const initialState = {
-  user: null,
+  user: {
+    firstName: '',
+    lastName: '',
+    email: '',
+    id: '',
+    bio: '',
+    age: '',
+    sex: '',
+    created: ''
+  },
   login: { 
     loading: false,
     error: null

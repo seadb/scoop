@@ -36,6 +36,11 @@
 .no-margin-right { margin-right: 0; }
 .no-margin-left { margin-left: 0; }
 
+.top-right {
+  position: absolute;
+  right: 1rem;
+  top: 1rem;
+}
 .non-mobile {
   display: none;
 }
@@ -86,20 +91,18 @@ a {
   position: relative;
 }
 
-.profile__add-friend {
+.button--light {
   color: #fdf6e3;
   font-size: 13px;
   padding-left: 0.5rem;
   padding-right: 1rem;
-  position: absolute;
-  right: 1rem;
-  top: 1rem;
 }
 
-.profile__add-friend:hover {
+.button--light:hover {
   background-color: white;
   color: #333;
 }
+
 
 .profile__icon {
   display: block;

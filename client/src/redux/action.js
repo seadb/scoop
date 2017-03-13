@@ -13,7 +13,7 @@ const requestPromise = (request, body, url) => {
 
 const action = ({dispatch, request, body, type, url, redirect}) => {
   dispatch({type: type});
-  requestPromise(request, body, url)
+  return requestPromise(request, body, url)
   .then(response => {
     dispatch({
       type: type,
@@ -23,6 +23,7 @@ const action = ({dispatch, request, body, type, url, redirect}) => {
     if(redirect) {
       window.location.href = redirect;
     }
+    return response.data;
   })
   .catch((error) => {
     dispatch({

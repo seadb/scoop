@@ -1,9 +1,23 @@
-import promise from 'bluebird'
-import humps from 'humps'
-import axios from 'axios'
+var promise= require('bluebird')
+var humps = require('humps')
+var axios = require('axios')
 
 
 const whitelist = ['http://localhost:*', 'http://localhost:8000', 'http://localhost:8100']
+
+const camelizeColumnNames = (data) => {
+  var template = data[0];
+  for (var prop in template) {
+    var camel = humps.camelize(prop);
+    if (!(camel in template)) {
+      for (var i = 0; i < data.length; i++) {
+        var d = data[i];
+        d[camel] = d[prop];
+        delete d[prop];
+      }
+    }
+  }
+}
 
 const config = {
   environment: process.env.NODE_ENV || 'development',
@@ -22,23 +36,10 @@ const config = {
   postgres: {
     connectionString: process.env.POSTGRES_CONNECTION_STRING
   },
-  camelizeColumnNames(data): () => {
-    var template = data[0];
-    for (var prop in template) {
-      var camel = humps.camelize(prop);
-      if (!(camel in template)) {
-        for (var i = 0; i < data.length; i++) {
-          var d = data[i];
-          d[camel] = d[prop];
-          delete d[prop];
-        }
-      }
-    }
-  },
   pgp: {
     promiseLib: promise,
-    receive: function (data) {
-      this.camelizeColumnNames(data)
+    receive: (data) => {
+      camelizeColumnNames(data)
     }
   },
   cors: {
@@ -52,4 +53,4 @@ const config = {
 }
 
 
-export default config
+module.exports = config

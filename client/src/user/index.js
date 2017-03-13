@@ -1,26 +1,37 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { getUser } from './user-actions'
-import { addFriend } from '../friends/friend-actions'
+import { getUser, setUser } from './user-actions'
+import { addFriend, deleteFriend } from '../friends/friend-actions'
 import Profile from './profile'
 
 class User extends React.Component {
   constructor(props) {
     super(props);
     this.addFriend = this.addFriend.bind(this);
+    this.deleteFriend = this.deleteFriend.bind(this);
   }
-  addFriend() {
-    this.props.dispatch(addFriend(this.props.auth.user, this.props.params.id))
+  componentDidUpdate(prevProps) {
+    if(!(prevProps.params.id === this.props.params.id)) {
+      this.props.dispatch(getUser(this.props.params.id))
+    }
   }
   componentDidMount() {
     this.props.dispatch(getUser(this.props.params.id))
   }
+  addFriend() {
+    this.props.dispatch(addFriend(this.props.auth.user, this.props.params.id))
+  }
+  deleteFriend() {
+    this.props.dispatch(deleteFriend(this.props.auth.user, this.props.params.id))
+  }
   render() {
     return (
       <Profile
-        user={this.props.user.data}
-        id={this.props.params.id}
+        user={this.props.user}
+        auth={this.props.auth}
+        friends={this.props.friends}
         addFriend={this.addFriend}
+        deleteFriend={this.deleteFriend}
       />
     )
   }
@@ -29,7 +40,8 @@ class User extends React.Component {
 const mapStateToProps = (state) => {
   return ({
     user: state.user,
-    auth: state.auth
+    auth: state.auth,
+    friends: state.friends
   })
 }
 export default connect(mapStateToProps)(User)

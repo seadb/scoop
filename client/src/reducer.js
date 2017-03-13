@@ -1,12 +1,12 @@
 import { combineReducers } from 'redux'
-import auth from './auth/auth-reducer.js'
-import user from './user/user-reducer.js'
-//import { friendReducer } from './friend/friend-reducer.js'
+import auth from './auth/auth-reducer'
+import user from './user/user-reducer'
+import friends from './friends/friend-reducer'
 
 const reducer = combineReducers({
   auth,
-  user
-//  friendReducer
+  user,
+  friends
 })
 //
 export default reducer;

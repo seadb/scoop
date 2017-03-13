@@ -5,7 +5,7 @@ import action from '../redux/action'
 
 export function getUser(id) {
   return (dispatch) => {
-    action({
+    return action({
       dispatch,
       request: axios.get,
       type: GET_USER,
@@ -14,3 +14,11 @@ export function getUser(id) {
   }
 }
 
+export function setUser(user) {
+  return (dispatch) => {
+    dispatch({
+      type: SET_USER,
+      data: user
+    });
+  }
+}
