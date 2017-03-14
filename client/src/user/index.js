@@ -1,7 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { getUser, setUser } from './user-actions'
-import { addFriend, deleteFriend } from '../friends/friend-actions'
+import { addFriend, deleteFriend, getFriends } from '../friends/friend-actions'
 import Profile from './profile'
 
 class User extends React.Component {
@@ -20,6 +20,9 @@ class User extends React.Component {
   }
   addFriend() {
     this.props.dispatch(addFriend(this.props.auth.user, this.props.params.id))
+      .then(() => {
+        this.props.dispatch(getFriends(this.props.auth.user, 'auth'))
+      })
   }
   deleteFriend() {
     this.props.dispatch(deleteFriend(this.props.auth.user, this.props.params.id))

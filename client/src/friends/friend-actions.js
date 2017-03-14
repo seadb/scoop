@@ -7,10 +7,9 @@ const axios = config.axios(cookie.load('token'))
 
 export function addFriend(user, id) {
   return (dispatch) => {
-    action({
+    return action({
       dispatch,
       request: axios.post,
-      body: user,
       type: ADD_FRIEND,
       url: `/friends/add/${id}`
     });
@@ -24,8 +23,8 @@ export function deleteFriend(user, id) {
       request: axios.post,
       body: user,
       type: DELETE_FRIEND,
-      url: `${API_URL}/friends/delete/${addId}`
-    });
+      url: `/friends/delete/${id}`
+    })
   }
 }
 

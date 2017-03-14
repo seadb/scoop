@@ -18,6 +18,8 @@ const reducer = (state, action, loadingState, successState, errorState) => {
       return Object.assign({}, state, successState)
     case "error":
       return Object.assign({}, state, errorState)
+    default:
+      return state
   }
 }
 export { generateStates }

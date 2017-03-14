@@ -4,7 +4,6 @@ const jwt = require('jsonwebtoken');
 const config = require('../config');
 
 const authenticate = (req, res, next) => {
-  console.log(req.headers)
   if (!(req.headers && req.headers.authorization)) {
     return res.status(400).json({
       message: 'Please log in'

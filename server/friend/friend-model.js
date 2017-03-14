@@ -13,10 +13,9 @@ function Friend() {
   };
 
   this.add = (from, to) => {
-    console.log(from + typeof(from) + to + typeof(to))
     var sql = 'INSERT INTO friends (from_user_id, to_user_id) ' +
               'VALUES ($1, $2) ' +
-              'RETURNING friends.*;';
+              'RETURNING *;'
     var params = [from, to];
     return db.one(sql, params);
   };
@@ -24,10 +23,10 @@ function Friend() {
   this.delete = (from, to) => {
     var sql = 'DELETE FROM friends ' +
               'WHERE from_user_id = $1 ' +
-              'AND to_user_id = $2' +
+              'AND to_user_id = $2 ' +
               'RETURNING friends.*;';
     var params = [from, to];
-    return db.none(sql, params);
+    return db.one(sql, params);
   };
 
    /* Get a list of users that user A has added as a friend
