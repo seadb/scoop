@@ -1,7 +1,9 @@
 'use strict';
 
-const db = require('../db');
 const bcrypt = require('bcrypt');
+const db = require('../db');
+const friendModel = require('../friend/friend-model')
+const Friend = new friendModel();
 
 const SALT_FACTOR = 5;
 
@@ -57,11 +59,17 @@ function User(obj) {
   this.one = function(input) {
     if (typeof(input) === "string") {
       const email = input
-      return db.one('SELECT * FROM users WHERE email = $1', email)
+      const user = db.one('SELECT * FROM users WHERE email = $1', email)
+      const friends = user.then(user => {
+        Friend.all(user.id)
+      })
+      return Promise.all([user, friends])
     }
     else if (typeof(input) === "number") {
       const id = input
-      return db.one('SELECT * FROM users WHERE id = $1', id)
+      const user = db.one('SELECT * FROM users WHERE id = $1', id)
+      const friends = Friend.all(id)
+      return Promise.all([user, friends])
     }
   };
 }

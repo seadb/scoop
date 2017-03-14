@@ -11,8 +11,9 @@ const login = (req, res, next) => {
   });
   Promise
     .all([userPromise, compare])
-    .then((results) => {
-      const user = results[0];
+    .then(results => {
+      const user = results[0][0];
+      user.friends = results[0][1]
       const bool = results[1];
       if (!bool) {
         res.status(401).json({
@@ -58,9 +59,10 @@ const register = (req, res, next) => {
       const user = User.save()
       const token = user.then((user) => {
           return jwt.sign({ sub: user.id }, config.secret, config.expiresIn);
-        })
+      })
       Promise.all([user, token])
         .then((results) => {
+          results[0].friends = []
           res.status(200).json({
             status: 'success',
             message: 'Registered user and logged in',

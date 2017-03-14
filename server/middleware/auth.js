@@ -21,8 +21,9 @@ const authenticate = (req, res, next) => {
     else {
       // check if the user still exists in the db
       return User.one(parseInt(decoded.sub))
-      .then((user) => {
-        req.user = user;
+      .then(results => {
+        req.user = results[0];
+        req.user.friends = results[1];
         return next();
       })
     }

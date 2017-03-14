@@ -1,7 +1,9 @@
-var userModel = require('./user-model');
+const userModel = require('./user-model');
+const friendModel = require('../friend/friend-model');
+const Users = new userModel();
+const Friend = new friendModel();
 
 const all = (req, res, next) => {
-  var Users = new userModel();
   Users.all()
     .then((user) => {
       res.status(200).json(user)
@@ -19,16 +21,13 @@ const all = (req, res, next) => {
 }
 
 const byID = (req, res, next) => {
-  var id = parseInt(req.params.id);
-  var Users = new userModel();
+  const id = parseInt(req.params.id);
   Users.one(id)
-    .then((user) => {
+    .then(results => {
+      const user = results[0]
+      user.friends = results[1]
+      console.log(user)
       res.status(200).json(user)
-        //.json({
-        //  status: 'success',
-        //  user: data,
-        //  message: 'Retrieved one user'
-        //});
     })
     .catch((error) => {
       res.status(500).json({
@@ -39,15 +38,12 @@ const byID = (req, res, next) => {
 }
 
 const byEmail = (req, res, next) => {
-  var Users = new userModel();
   Users.one(req.body.email)
-    .then((user) => {
+    .then(results => {
+      const user = results[0]
+      user.friends = results[1]
+      console.log(user)
       res.status(200).json(user)
-      //  .json({
-      //    status: 'success',
-      //    user: data,
-      //    message: 'Retrieved ONE user'
-      //  });
     })
     .catch((error) => {
       res.status(500).json({
@@ -59,8 +55,8 @@ const byEmail = (req, res, next) => {
 
 const create = function(req, res, next) {
   req.body.age = parseInt(req.body.age);
-  const user = new userModel(req.body);
-  user.save()
+  const User = new userModel(req.body);
+  User.save()
     .then((user) => {
       res.status(200).json(user)
       //  .json({

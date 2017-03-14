@@ -15,7 +15,6 @@ const initialAuthState = {
   loading: false,
   data:  [],
   error: null
-
 }
 
 const auth = (state = initialAuthState, action) => {
