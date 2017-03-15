@@ -11,7 +11,7 @@ const NavUser = (props) => (
       <a href={"#/" + props.id} className="nav__link icon">
         <i className="fa fa-user-circle" aria-hidden="true"></i>
       </a>
-      <a href="#" className="nav__link">
+      <a href="#" onClick={props.logout} className="nav__link">
         <i className="fa fa-sign-out" aria-hidden="true"></i>
       </a>
     </div>

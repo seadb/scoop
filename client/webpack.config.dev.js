@@ -20,13 +20,6 @@ module.exports = {
       }
     }]
   },
-  /*plugins: [
-    new WebpackShellPlugin({
-      onBuildExit: [
-        'cordova build'
-      ]
-    })
-  ],*/
   devServer: {
     historyApiFallback: true,
   }

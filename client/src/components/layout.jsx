@@ -8,7 +8,7 @@ const Layout = (props) => {
   return (
     <div>
       <header className="header">
-        {props.auth.user ? <NavUser id={props.auth.user.id}/> : <NavGuest/>}
+        {props.auth.user.id ? <NavUser id={props.auth.user.id} logout={props.logout}/> : <NavGuest/>}
       </header>
       <div className="content">
         {props.children}

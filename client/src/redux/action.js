@@ -11,7 +11,7 @@ const requestPromise = (request, body, url) => {
   }
 }
 
-const action = ({dispatch, request, body, type, url, redirect}) => {
+const action = ({dispatch, request, body, type, url}) => {
   dispatch({type: type});
   return requestPromise(request, body, url)
   .then(response => {
@@ -20,12 +20,9 @@ const action = ({dispatch, request, body, type, url, redirect}) => {
       status: 'success',
       data: response.data
     });
-    if(redirect) {
-      window.location.href = redirect;
-    }
-    return response.data;
+    return response
   })
-  .catch((error) => {
+  .catch(error => {
     dispatch({
       type: type,
       status: 'error',
@@ -34,25 +31,4 @@ const action = ({dispatch, request, body, type, url, redirect}) => {
   });
 }
 
-
-const actioncb = ({dispatch, request, body, type, url, cb}) => {
-  dispatch({type: type});
-  requestPromise(request, body, url)
-  .then(response => {
-    dispatch({
-      type: type,
-      status: 'success',
-      data: response.data
-    });
-    cb(response)
-  })
-  .catch((error) => {
-    dispatch({
-      type: type,
-      status: 'error',
-      error: error
-    });
-  });
-}
 export default action
-export { actioncb }

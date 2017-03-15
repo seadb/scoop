@@ -41,6 +41,8 @@ const authReducer = (state = initialState, action) => {
         }
       }
       return reducer(state, action, loading, success, error)
+      case LOGOUT:
+        return Object.assign({}, state, {user:initialState.user})
       break
 //      else if (action.status === "success") {
 //        return Object.assign({}, state, {

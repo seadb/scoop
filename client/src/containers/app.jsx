@@ -1,20 +1,24 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import cookie from 'react-cookie'
-import { verify } from '../auth/auth-actions'
+import { verify, logout } from '../auth/auth-actions'
 import Layout from '../components/layout'
 
 class App extends React.Component {
   constructor(props) {
     super(props)
     this.props.dispatch(verify(cookie.load('token')))
+    this.logout = this.logout.bind(this)
     //.then(() => {
     //  this.props.dispatch(getFriends(this.props.auth.user,'auth'))
     //})
   }
+  logout() {
+    this.props.dispatch(logout())
+  }
   render() {
     return (
-      <Layout auth={this.props.auth}>
+      <Layout auth={this.props.auth} logout={this.logout}>
         {this.props.children}
       </Layout>
     )

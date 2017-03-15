@@ -6,7 +6,8 @@ const config = require('../config').token
 
 const login = (req, res, next) => {
   const userPromise = Users.one(req.body.email);
-  const compare = userPromise.then((user) => {
+  const compare = userPromise.then((results) => {
+    const user = results[0];
     return bcrypt.compare(req.body.password, user.password);
   });
   Promise
@@ -48,7 +49,7 @@ const register = (req, res, next) => {
   req.body.age ? parseInt(req.body.age) : '';
   const User = new userModel(req.body);
   User.one(req.body.email)
-    .then((user) => {
+    .then((results) => {
       return res.status(401).json({
         status: 'error',
         error: 'The email address ' + req.body.email +

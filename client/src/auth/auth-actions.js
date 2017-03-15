@@ -2,7 +2,7 @@ import axios from 'axios'
 import cookie from 'react-cookie'
 import { LOGIN, LOGOUT, REGISTER, VERIFY } from './auth-constants'
 import { API_URL, CLIENT_ROOT_URL } from '../config'
-import action, { actioncb } from '../redux/action'
+import action from '../redux/action'
 
 export function verify(token) {
   const axiosAuth = axios.create({
@@ -22,35 +22,40 @@ export function verify(token) {
 
 export function login(email, password) {
   return (dispatch) => {
-    const callback = (response) => {
-      cookie.save('token', response.data.token, { path: '/' });
-      window.location.href = CLIENT_ROOT_URL + response.data.user.id
-    }
-    return actioncb({
+    return action({
       dispatch,
       request: axios.post,
       url: `${API_URL}/auth/login`,
       body: { email, password },
-      type: LOGIN,
-      cb: callback
+      type: LOGIN
+    })
+    .then((response) => {
+      cookie.save('token', response.data.token, { path: '/' });
+      window.location.href = CLIENT_ROOT_URL + response.data.user.id
     })
   }
 }
 
 export function register (firstName, lastName, email, password) {
   return (dispatch) => {
-    const callback = (response) => {
-      cookie.save('token', response.data.token, { path: '/' });
-      window.location.href = CLIENT_ROOT_URL + response.data.user.id
-    }
-    return actioncb({
+    return action({
       dispatch,
       request: axios.post,
       url: `${API_URL}/auth/register`,
       body: { firstName, lastName, email, password },
-      type: REGISTER,
-      cb: callback
+      type: REGISTER
     })
+    .then((response) => {
+      cookie.save('token', response.data.token, { path: '/' });
+      window.location.href = CLIENT_ROOT_URL + response.data.user.id
+    })
+
   }
 }
 
+export function logout () {
+  return (dispatch) => {
+    dispatch({type: LOGOUT});
+    cookie.delete('token', { path: '/' });
+  }
+}

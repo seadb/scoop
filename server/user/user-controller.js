@@ -26,7 +26,6 @@ const byID = (req, res, next) => {
     .then(results => {
       const user = results[0]
       user.friends = results[1]
-      console.log(user)
       res.status(200).json(user)
     })
     .catch((error) => {
@@ -42,7 +41,6 @@ const byEmail = (req, res, next) => {
     .then(results => {
       const user = results[0]
       user.friends = results[1]
-      console.log(user)
       res.status(200).json(user)
     })
     .catch((error) => {

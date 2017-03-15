@@ -61,7 +61,7 @@ function User(obj) {
       const email = input
       const user = db.one('SELECT * FROM users WHERE email = $1', email)
       const friends = user.then(user => {
-        Friend.all(user.id)
+        return Friend.all(user.id)
       })
       return Promise.all([user, friends])
     }
