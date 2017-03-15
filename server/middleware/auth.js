@@ -14,6 +14,7 @@ const authenticate = (req, res, next) => {
   //var token = header[1];
   jwt.verify(req.headers.authorization, config.token.secret, (err, decoded) => {
     if (err) {
+      console.log(err)
       return res.status(401).json({
         message: 'Token has expired'
       });

@@ -13,7 +13,7 @@ export function verify(token) {
     return action({
       dispatch,
       request: axiosAuth.post,
-      url: `${API_URL}/auth/user`,
+      url: `${API_URL}/auth/verify`,
       body: { token },
       type: VERIFY
     })
@@ -31,7 +31,7 @@ export function login(email, password) {
     })
     .then((response) => {
       cookie.save('token', response.data.token, { path: '/' });
-      window.location.href = CLIENT_ROOT_URL + response.data.user.id
+      window.location.href = CLIENT_ROOT_URL + response.data.id
     })
   }
 }
@@ -47,7 +47,7 @@ export function register (firstName, lastName, email, password) {
     })
     .then((response) => {
       cookie.save('token', response.data.token, { path: '/' });
-      window.location.href = CLIENT_ROOT_URL + response.data.user.id
+      window.location.href = CLIENT_ROOT_URL + response.data.id
     })
 
   }
@@ -56,6 +56,6 @@ export function register (firstName, lastName, email, password) {
 export function logout () {
   return (dispatch) => {
     dispatch({type: LOGOUT});
-    cookie.delete('token', { path: '/' });
+    cookie.remove('token', { path: '/' });
   }
 }

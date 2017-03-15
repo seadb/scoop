@@ -12,11 +12,6 @@ module.exports = {
       })
       .then((data) => {
         res.status(200).json(data)
-        //  .json({
-        //    status: 'success',
-        //    data: data,
-        //    message: 'Added ' + req.params.id + ' as a friend'
-        //  });
       })
       .catch((error) => {
         res.status(500).json({
@@ -26,14 +21,10 @@ module.exports = {
       });
   },
   all: (req, res, next) => {
-    Friends.all(req.user.id)
+    const id = parseInt(req.params.id)
+    Friends.all(id)
       .then((data) => {
         res.status(200).json(data)
-        //  .json({
-        //    status: 'success',
-        //    data: data,
-        //    message: 'Retrieved ALL friends'
-        //  });
       })
       .catch((error) => {
         res.status(500).json({
@@ -50,11 +41,6 @@ module.exports = {
       })
       .then((data) => {
         res.status(200).json(data)
-          //.json({
-          //  status: 'success',
-          //  data: data,
-          //  message: 'Deleted friend ' + req.params.id
-          //});
       })
       .catch((error) => {
         res.status(500).json({
@@ -64,19 +50,27 @@ module.exports = {
       });
   },
   reciprocal: (req, res, next) => {
-    Friends.reciprocal(req.user.id)
+    const id = parseInt(req.params.id)
+    Friends.reciprocal(id)
       .then((data) => {
         res.status(200).json(data)
-        //  .json({
-        //    status: 'success',
-        //    data: data,
-        //    message: 'Retrieved reciprocal friends'
-        //  });
       })
       .catch((error) => {
         res.status(500).json({
           error: error,
           message: 'Failed to fetch reciprocal friends'
+        })
+      });
+  },
+  followers: (req, res, next) => {
+    Friends.followers(req.user.id)
+      .then((data) => {
+        res.status(200).json(data)
+      })
+      .catch((error) => {
+        res.status(500).json({
+          error: error,
+          message: 'Failed to fetch followers'
         })
       });
   }

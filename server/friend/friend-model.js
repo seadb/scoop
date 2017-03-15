@@ -45,6 +45,15 @@ function Friend() {
 
     return db.any(sql, userId);
   }
+  this.followers = (userId) => {
+    var sql = 'SELECT users.* ' +
+              'FROM users ' +
+              'JOIN friends ' +
+              'ON users.id=friends.from_user_id ' +
+              'WHERE friends.to_user_id = $1;';
+
+    return db.any(sql, userId);
+  }
 }
 
 module.exports = Friend;

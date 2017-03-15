@@ -6,6 +6,6 @@ const authenticate = require('../middleware/auth');
 routes.post('/login', controller.login);
 routes.post('/logout', controller.logout);
 routes.post('/register', controller.register);
-routes.post('/user', authenticate, controller.user);
+routes.post('/verify', authenticate, controller.verify);
 
 module.exports = routes;
