@@ -9,5 +9,6 @@ var controller = require('./user-controller.js');
 routes.get('/', controller.all);
 routes.get('/:id', controller.byID);
 routes.post('/create', controller.create);
+routes.post('/update/:id', controller.update);
 
 module.exports = routes;

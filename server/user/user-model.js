@@ -8,7 +8,7 @@ const Friend = new friendModel();
 const SALT_FACTOR = 5;
 
 // Uses props from User.fields to generate insert SQL statement
-const generateSQL = function(props) {
+const generateRow = function(props) {
   let columns = ''
   let values = ''
   for (const prop in props) {
@@ -18,9 +18,21 @@ const generateSQL = function(props) {
   }
   columns = columns.slice(0, columns.length-2)
   values = values.slice(0, values.length-2)
-  const sql ='INSERT INTO users (' + columns + ') VALUES (' + values + ') '
-    + 'RETURNING *'
-  return sql
+  return {
+    columns: columns,
+    values: values
+  }
+}
+
+const generateUpdate = function(props) {
+  let assign = ''
+  for (const prop in props) {
+    const value = '${' + prop + '}'
+    const column = prop.replace(/([a-z])([A-Z])/g, '$1_$2').toLowerCase()
+    assign = assign + column + ' = ' + value + ', '
+  }
+  assign = assign.slice(0, assign.length-2)
+  return assign
 }
 
 function User(obj) {
@@ -46,7 +58,13 @@ function User(obj) {
     //  'age, sex) VALUES(${email}, ${password}, ${firstName}, ${lastName}, ' +
     //  '${bio}, ${age}, ${sex})' 
 
-    const sql = generateSQL(this.fields)
+    const row = generateRow(this.fields)
+    const sql = 'INSERT INTO users '
+              + '(' + row.columns + ') '
+              + 'VALUES (' + row.values + ') '
+              + 'RETURNING *;'
+
+    console.log(sql)
     return bcrypt.hash(this.fields.password, SALT_FACTOR)
       .then((hash) => {
         this.fields.password = hash
@@ -54,12 +72,17 @@ function User(obj) {
       });
   }
   this.all = function() {
-    return db.any('SELECT * FROM users')
+    const sql = 'SELECT * ' +
+                'FROM users;'
+    return db.any(sql)
   };
   this.one = function(input) {
     if (typeof(input) === "string") {
       const email = input
-      const user = db.one('SELECT * FROM users WHERE email = $1', email)
+      const sql = 'SELECT * ' +
+                  'FROM users ' +
+                  'WHERE email = $1;'
+      const user = db.one(sql, email)
       const friends = user.then(user => {
         return Friend.all(user.id)
       })
@@ -67,11 +90,23 @@ function User(obj) {
     }
     else if (typeof(input) === "number") {
       const id = input
-      const user = db.one('SELECT * FROM users WHERE id = $1', id)
+      const query = 'SELECT * ' +
+                    'FROM users ' +
+                    'WHERE id = $1;'
+      const user = db.one(query, id)
       const friends = Friend.all(id)
       return Promise.all([user, friends])
     }
   };
+  this.update = function(id, updates) {
+    const rows = generateUpdate(updates)
+    const sql = 'UPDATE users '
+              + 'SET ' + rows + ' '
+              + 'WHERE id = ${id} '
+              + 'RETURNING *;'
+    updates.id = id
+    return db.one(sql, updates);
+  }
 }
 
 module.exports = User

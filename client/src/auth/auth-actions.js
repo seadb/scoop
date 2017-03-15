@@ -17,6 +17,11 @@ export function verify(token) {
       body: { token },
       type: VERIFY
     })
+    .catch(error => {
+      if(error.message === "Token has expired") {
+        dispatch(logout())
+      }
+    })
   }
 }
 
@@ -49,7 +54,6 @@ export function register (firstName, lastName, email, password) {
       cookie.save('token', response.data.token, { path: '/' });
       window.location.href = CLIENT_ROOT_URL + response.data.id
     })
-
   }
 }
 
