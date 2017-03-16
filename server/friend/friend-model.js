@@ -1,5 +1,5 @@
 'use strict';
-const db = require('../db');
+const db = require('../db')
 
 function Friend() {
   this.all = (userId) => {
@@ -17,6 +17,7 @@ function Friend() {
               'VALUES ($1, $2) ' +
               'RETURNING *;'
     var params = [from, to];
+
     return db.one(sql, params);
   };
 

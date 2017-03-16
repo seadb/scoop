@@ -5,8 +5,7 @@ import friends from './friends/friend-reducer'
 
 const reducer = combineReducers({
   auth,
-  user,
-  friends
+  user
 })
 //
 export default reducer;

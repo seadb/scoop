@@ -20,9 +20,9 @@ class User extends React.Component {
   }
   addFriend() {
     this.props.dispatch(addFriend(this.props.auth.user, this.props.params.id))
-      .then(() => {
-        this.props.dispatch(getFriends(this.props.auth.user, 'auth'))
-      })
+    //  .then(() => {
+    //    this.props.dispatch(getFriends(this.props.auth.user, 'auth'))
+    //  })
   }
   deleteFriend() {
     this.props.dispatch(deleteFriend(this.props.auth.user, this.props.params.id))
@@ -32,7 +32,6 @@ class User extends React.Component {
       <Profile
         user={this.props.user}
         auth={this.props.auth}
-        friends={this.props.friends}
         addFriend={this.addFriend}
         deleteFriend={this.deleteFriend}
       />
@@ -43,8 +42,7 @@ class User extends React.Component {
 const mapStateToProps = (state) => {
   return ({
     user: state.user,
-    auth: state.auth,
-    friends: state.friends
+    auth: state.auth
   })
 }
 export default connect(mapStateToProps)(User)

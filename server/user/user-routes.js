@@ -8,6 +8,7 @@ var controller = require('./user-controller.js');
 
 routes.get('/', controller.all);
 routes.get('/:id', controller.byID);
+routes.get('/lookup/:id', controller.lookup);
 routes.post('/create', controller.create);
 routes.post('/update/:id', controller.update);
 

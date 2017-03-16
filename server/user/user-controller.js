@@ -1,3 +1,4 @@
+'use strict';
 const userModel = require('./user-model');
 const friendModel = require('../friend/friend-model');
 const Users = new userModel();
@@ -88,11 +89,25 @@ const update = (req, res, next) => {
     });
 }
 
+const lookup = (req, res, next) => {
+  let input
+  if (req.body.email) { input = req.body.email }
+  else if (req.params.id) { input = parseInt(req.params.id) }
+  Users.lookup(input)
+    .then((user) => {
+      res.status(200).json(user)
+    })
+    .catch((error) => {
+      res.status(200).json(false)
+    })
+}
+
 module.exports = {
   all: all,
   byID: byID,
   byEmail: byEmail,
   create: create,
-  update: update
+  update: update,
+  lookup: lookup
 //  remove: remove
 };

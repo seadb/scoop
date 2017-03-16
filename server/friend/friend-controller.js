@@ -1,17 +1,18 @@
-const userModel = require('../user/user-model')
-const Users = new userModel()
 const friendModel = require('./friend-model')
 const Friends = new friendModel()
+const userModel = require('../user/user-model')
+const Users = new userModel()
 
 module.exports = {
   add: (req, res, next) => {
     const id = parseInt(req.params.id)
-    Users.one(id)
-      .then((user) => {
-        return Friends.add(req.user.id, id);
-      })
-      .then((data) => {
-        res.status(200).json(data)
+    const lookup = Users.lookup(id)
+    const add = lookup.then((friend) => {
+      return Friends.add(req.user.id, id, friend)
+    })
+    Promise.all([lookup, add])
+      .then((results) => {
+        res.status(200).json(results[0])
       })
       .catch((error) => {
         res.status(500).json({

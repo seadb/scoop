@@ -1,4 +1,5 @@
-import { LOGIN, LOGOUT, REGISTER, VERIFY } from './auth-constants'
+import { LOGIN, LOGOUT, REGISTER, VERIFY, ADD_FRIEND, DELETE_FRIEND } 
+  from './auth-constants'
 import reducer from '../redux/reducer'
 
 const initialState = {
@@ -12,98 +13,103 @@ const initialState = {
     sex: '',
     created: ''
   },
-  login: { 
-    loading: false,
-    error: null
-  },
-  register: {
-    loading: false,
-    error: null
-  },
-  verify: {
-    loading: false,
-    error: null
-  }
+  friends: [],
+  error: undefined,
+  loggingIn: false,
+  registering: false,
+  verifying: false,
+  adding: false,
+  deleting: false
 }
 
 const authReducer = (state = initialState, action) => {
   switch (action.type) {
     case LOGIN:
-      let loading = { login: { loading: true }}
+      let loading = { loggingIn: true }
       let success = {
-        user: action.data,
-        login: { loading: false }
+        user: action.data.user,
+        friends: action.data.friends,
+        loggingIn: false
       }
       let error = {
-        login: {
-          loading: false,
-          error: action.error
-        }
+        loggingIn: false,
+        error: action.error
       }
       return reducer(state, action, loading, success, error)
-      case LOGOUT:
-        return Object.assign({}, state, {user:initialState.user})
-      break
-//      else if (action.status === "success") {
-//        return Object.assign({}, state, {
-//          loggingIn: false,
-//          user: action.payload
-//        })
-//      }
-//      else if (action.status === "error") {
-//        return Object.assign({}, state, {
-//          loggingIn: false,
-//          error: action.payload
-//        })
-//      }
+    case LOGOUT:
+      return Object.assign({}, state, {user:initialState.user})
     case REGISTER:
-      const regLoading = { register: { loading: true }}
+      const regLoading = { registering: true }
       const regSuccess = {
-        user: action.data,
-        register: { loading: false }
-
+        user: action.data.user,
+        friends: action.data.friends,
+        registering: false 
       }
       const regError = {
-        register: {
-          loading: false,
-          error: action.error
-        }
+        registering: false,
+        error: action.error
       }
       return reducer(state, action, regLoading, regSuccess, regError)
-      break
     case VERIFY:
-      const verLoading = { verify: { loading: true }}
-      const verSuccess = {
-        user: action.data,
-        verify: { loading: false }
+      const verLoading = { verifying: true }
+      let verSuccess
+      if(action.status === "success") {
+        verSuccess = {
+          user: action.data.user,
+          friends: action.data.friends,
+          verifying: false
+        }
       }
       const verError = {
-        verify: {
-          loading: false,
+        verifying: false,
+        error: action.error
+      }
+      return reducer(state, action, verLoading, verSuccess, verError)
+    case ADD_FRIEND:
+      const friends = [...state.friends]
+      if (action.status === "success") {
+        friends.push(action.data)
+      }
+      const add = {
+        loading: {
+          adding: true
+        },
+        success: {
+          adding: false,
+          friends: friends
+        },
+        error: {
+          adding: false,
           error: action.error
         }
       }
-      return reducer(state, action, verLoading, verSuccess, verError)
-      break
-//      if (!action.status) {
-//        return Object.assign({}, state, {
-//          registering: true
-//        })
-//      }
-//      else if (action.status === "success") {
-//        return Object.assign({}, state, {
-//          registering: false,
-//          user: action.payload
-//        })
-//      }
-//      else if (action.status === "error") {
-//        return Object.assign({}, state, {
-//          registering: false,
-//          error: action.payload
-//        })
-//      }
-      default:
-        return state
+      return reducer(state, action, add.loading, add.success, add.error)
+    case DELETE_FRIEND:
+      const newFriends = [...state.friends]
+      if (action.status === "success") {
+         for(var i = 0; i < newFriends.length; i++) {
+           if(newFriends[i].id === action.data.toUserId) {
+             newFriends.splice(i, 1);
+             break;
+           }
+         }
+      }
+      const deleted = {
+        loading: {
+          deleting: true
+        },
+        success: {
+          deleting: false,
+          friends: newFriends
+        },
+        error: {
+          deleting: false,
+          error: action.error
+        }
+      }
+      return reducer(state, action, deleted.loading, deleted.success, deleted.error)
+    default:
+      return state
   }
 }
 

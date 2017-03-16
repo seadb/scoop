@@ -48,8 +48,8 @@ const Profile = (props) => {
   if(props.auth.user.id === props.user.data.id) { //this is 'my' profile
     button = edit 
   }
-  else if (props.auth.user && props.friends && props.friends.auth.data) {
-    const ids = props.friends.auth.data.map( (friend) => {
+  else if (props.auth.friends ) {
+    const ids = props.auth.friends.map( (friend) => {
       return friend.id
     })
     button = ids.includes(props.user.data.id) ? unfriend : addFriend

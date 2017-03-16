@@ -24,7 +24,7 @@ const authenticate = (req, res, next) => {
       return User.one(parseInt(decoded.sub))
       .then(results => {
         req.user = results[0];
-        req.user.friends = results[1];
+        req.friends = results[1];
         return next();
       })
     }

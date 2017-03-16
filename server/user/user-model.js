@@ -2,7 +2,7 @@
 
 const bcrypt = require('bcrypt');
 const db = require('../db');
-const friendModel = require('../friend/friend-model')
+const friendModel = require('../friend/friend-model');
 const Friend = new friendModel();
 
 const SALT_FACTOR = 5;
@@ -98,6 +98,20 @@ function User(obj) {
       return Promise.all([user, friends])
     }
   };
+  this.lookup = function(input) {
+    let sql = ''
+    if (typeof(input) === "string") {
+      sql = 'SELECT * '
+          + 'FROM users '
+          + 'WHERE email = $1;'
+    }
+    else if (typeof(input) === "number") {
+      sql = 'SELECT * '
+          + 'FROM users '
+          + 'WHERE id = $1;'
+    }
+    return db.one(sql, input)
+  }
   this.update = function(id, updates) {
     const rows = generateUpdate(updates)
     const sql = 'UPDATE users '

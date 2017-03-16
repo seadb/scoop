@@ -7,7 +7,6 @@ import Layout from '../components/layout'
 class App extends React.Component {
   constructor(props) {
     super(props)
-    this.props.dispatch(verify(cookie.load('token')))
     this.logout = this.logout.bind(this)
     //.then(() => {
     //  this.props.dispatch(getFriends(this.props.auth.user,'auth'))
@@ -15,6 +14,9 @@ class App extends React.Component {
   }
   logout() {
     this.props.dispatch(logout())
+  }
+  componentDidMount() {
+    this.props.dispatch(verify(cookie.load('token')))
   }
   render() {
     return (

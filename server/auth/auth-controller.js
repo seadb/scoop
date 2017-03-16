@@ -15,7 +15,7 @@ const login = (req, res, next) => {
     .all([userPromise, compare])
     .then(results => {
       const user = results[0][0];
-      user.friends = results[0][1]
+      const friends = results[0][1]
       const bool = results[1];
       if (!bool) {
         res.status(401).json({
@@ -25,8 +25,11 @@ const login = (req, res, next) => {
       }
       else {
         const token = jwt.sign({sub: user.id}, config.secret, config.expiresIn);
-        user.token = token
-        res.status(200).json(user);
+        res.status(200).json({
+          user: user,
+          friends: friends,
+          token: token
+        });
       }
     })
     .catch((err) => {
@@ -46,7 +49,7 @@ const logout = () => {
 const register = (req, res, next) => {
   req.body.age ? parseInt(req.body.age) : '';
   const User = new userModel(req.body);
-  User.one(req.body.email)
+  User.lookup(req.body.email)
     .then((results) => {
       return res.status(401).json({
         status: 'error',
@@ -62,9 +65,11 @@ const register = (req, res, next) => {
       })
       Promise.all([user, token])
         .then((results) => {
-          results[0].friends = []
-          results[0].token = results[1]
-          res.status(200).json(results[0]);
+          res.status(200).json({
+            user: results[0],
+            friends: [],
+            token: results[1]
+          });
         })
         .catch((err) => {
           dberr(err, res)
@@ -77,7 +82,11 @@ const register = (req, res, next) => {
 }
 
 const verify = (req, res, next) => {
-  res.status(200).json(req.user)
+  console.log('verify')
+  res.status(200).json({
+    user: req.user,
+    friends: req.friends
+  })
 }
 
 module.exports = {
