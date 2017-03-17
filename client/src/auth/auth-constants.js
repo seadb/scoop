@@ -8,5 +8,6 @@ export const ADD_FRIEND='ADD_FRIEND'
 export const DELETE_FRIEND='DELETE_FRIEND'
 export const UPDATE='UPDATE'
 export const EDIT_USER='EDIT_USER'
+export const EDIT_FIELD='EDIT_FIELD'
 export const COPY_USER='COPY_USER'
 

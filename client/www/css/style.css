@@ -125,6 +125,9 @@ a {
 }
 .profile__username { text-align: center; }
 .profile__bio {  text-align: justify; }
+.profile__field { cursor: pointer; }
+
+.field--invisible { border: none; }
 
 .trips__title { letter-spacing: .05em; }
 .trip { transition: 1s ease;}

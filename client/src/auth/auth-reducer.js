@@ -1,4 +1,4 @@
-import { LOGIN, LOGOUT, REGISTER, VERIFY, ADD_FRIEND, DELETE_FRIEND, UPDATE, EDIT_USER, COPY_USER } 
+import { LOGIN, LOGOUT, REGISTER, VERIFY, ADD_FRIEND, DELETE_FRIEND, UPDATE, EDIT_USER, COPY_USER, EDIT_FIELD} 
   from './auth-constants'
 import reducer from '../redux/reducer'
 
@@ -15,6 +15,7 @@ const initialState = {
   },
   updates: {},
   edit: {},
+  editing: {},
   friends: [],
   error: undefined,
   loggingIn: false,
@@ -45,7 +46,11 @@ const authReducer = (state = initialState, action) => {
     case LOGOUT:
       return Object.assign({}, state, {user:initialState.user})
     case EDIT_USER:
-      return Object.assign({}, state, {edit: action.data,updates: action.data})
+      const updates = Object.assign({}, state.updates, action.data)
+      const edit = Object.assign({}, state.edit, action.data)
+      return Object.assign({}, state, {edit, updates})
+    case EDIT_FIELD:
+      return Object.assign({}, state, {editing: action.data})
     case COPY_USER:
       return Object.assign({}, state, {edit: state.user})
     case REGISTER:

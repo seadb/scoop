@@ -1,6 +1,7 @@
 import axios from 'axios'
 import cookie from 'react-cookie'
-import { LOGIN, LOGOUT, REGISTER, VERIFY, UPDATE, EDIT_USER, COPY_USER } from './auth-constants'
+import { LOGIN, LOGOUT, REGISTER, VERIFY, UPDATE, EDIT_USER, COPY_USER, EDIT_FIELD } 
+  from './auth-constants'
 import config, { API_URL, CLIENT_ROOT_URL } from '../config'
 import action from '../redux/action'
 const axiosAuth = config.axios(cookie.load('token'))
@@ -79,6 +80,15 @@ export function editUser(updates) {
       type: EDIT_USER,
       data: updates
     });
+  }
+}
+
+export function editField(field) {
+  return (dispatch) => {
+    dispatch({
+      type: EDIT_FIELD,
+      data: field
+    })
   }
 }
 
