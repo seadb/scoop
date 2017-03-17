@@ -24,12 +24,8 @@ class Register extends React.Component {
   }
   handleSubmit(e) {
     e.preventDefault()
-    const { dispatch } = this.props
-    const state = this.state
-    dispatch(register(state.firstName, state.lastName, state.email, state.password))
+    this.props.dispatch(register(this.state))
     this.setState(this.baseState)
-    console.log(this.state)
-    //this.props.router.go()
   }
   render() {
     return (
@@ -44,25 +40,6 @@ class Register extends React.Component {
     )
   }
 }
-
-//  for: React.PropTypes.string,
-//  label: React.PropTypes.string,
-//  inputClass: React.PropTypes.string,
-//  type: React.PropTypes.string,
-//  name: React.PropTypes.string,
-//  maxLength: React.PropTypes.number,
-//  handleChange: React.PropTypes.func,
-//  value: React.PropTypes.string
-//
-//  id SERIAL PRIMARY KEY,
-//  first_name VARCHAR(255),
-//  last_name VARCHAR(255),
-//  email VARCHAR(255),
-//  password VARCHAR(2048),
-//  bio VARCHAR(1024),
-//  age INTEGER,
-//  sex VARCHAR,
-//  created timestamp default current_timestamp
 
 const mapStateToProps = (state) => (state)
 

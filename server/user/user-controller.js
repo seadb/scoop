@@ -71,10 +71,8 @@ const create = (req, res, next) => {
 const update = (req, res, next) => {
   req.body.age ? req.body.age = parseInt(req.body.age): '';
   const id = parseInt(req.params.id);
-  Users.one(id)
+  Users.lookup(id)
     .then(results => {
-      console.log(results)
-      console.log(req.body)
       return Users.update(id, req.body)
     })
     .then(user => {

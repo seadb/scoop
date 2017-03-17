@@ -1,5 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
+import { hashHistory } from 'react-router'
 import { getUser, setUser } from './user-actions'
 import { addFriend, deleteFriend, getFriends } from '../friends/friend-actions'
 import Profile from './profile'
@@ -9,6 +10,7 @@ class User extends React.Component {
     super(props);
     this.addFriend = this.addFriend.bind(this);
     this.deleteFriend = this.deleteFriend.bind(this);
+    this.edit = this.edit.bind(this);
   }
   componentDidUpdate(prevProps) {
     if(!(prevProps.params.id === this.props.params.id)) {
@@ -27,6 +29,9 @@ class User extends React.Component {
   deleteFriend() {
     this.props.dispatch(deleteFriend(this.props.auth.user, this.props.params.id))
   }
+  edit() {
+    hashHistory.push('edit')
+  }
   render() {
     return (
       <Profile
@@ -34,6 +39,7 @@ class User extends React.Component {
         auth={this.props.auth}
         addFriend={this.addFriend}
         deleteFriend={this.deleteFriend}
+        edit={this.edit}
       />
     )
   }

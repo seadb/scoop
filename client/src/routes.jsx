@@ -5,6 +5,7 @@ import Index from './components/index'
 import Login from './auth/login'
 import Register from './auth/register'
 import User from './user'
+import Edit from './auth/edit'
 
 const Routes = () => (
   <Router history={hashHistory}>
@@ -12,6 +13,7 @@ const Routes = () => (
       <IndexRoute component={Index} />
       <Route path='login' component={Login} />
       <Route path='register' component={Register} />
+      <Route path='edit' component={Edit} />
       <Route path=':id' component={User} />
     </Route>
   </Router>

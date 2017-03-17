@@ -39,7 +39,7 @@ const Profile = (props) => {
     </div>
   )
   const edit = (
-    <button onClick={props.deleteFriend} className="button button--light top-right">
+    <button className="button button--light top-right" onClick={props.edit}>
       <i className="fa fa-pencil" aria-hidden="true"></i>
       Edit
     </button>

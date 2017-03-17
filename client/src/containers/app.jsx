@@ -16,7 +16,7 @@ class App extends React.Component {
     this.props.dispatch(logout())
   }
   componentDidMount() {
-    this.props.dispatch(verify(cookie.load('token')))
+    this.props.dispatch(verify())
   }
   render() {
     return (
