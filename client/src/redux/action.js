@@ -26,7 +26,7 @@ const action = ({dispatch, request, body, type, url}) => {
     dispatch({
       type: type,
       status: 'error',
-      error: error
+      error: error.response? error.response.data.message : error.message
     });
   });
 }

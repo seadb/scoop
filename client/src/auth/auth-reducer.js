@@ -1,4 +1,4 @@
-import { LOGIN, LOGOUT, REGISTER, VERIFY, ADD_FRIEND, DELETE_FRIEND } 
+import { LOGIN, LOGOUT, REGISTER, VERIFY, ADD_FRIEND, DELETE_FRIEND, UPDATE, EDIT_USER, COPY_USER } 
   from './auth-constants'
 import reducer from '../redux/reducer'
 
@@ -13,11 +13,14 @@ const initialState = {
     sex: '',
     created: ''
   },
+  updates: {},
+  edit: {},
   friends: [],
   error: undefined,
   loggingIn: false,
   registering: false,
   verifying: false,
+  updating: false,
   adding: false,
   deleting: false
 }
@@ -26,10 +29,13 @@ const authReducer = (state = initialState, action) => {
   switch (action.type) {
     case LOGIN:
       let loading = { loggingIn: true }
-      let success = {
-        user: action.data.user,
-        friends: action.data.friends,
-        loggingIn: false
+      let success = {}
+      if (action.status === "success") {
+          success = {
+          user: action.data.user,
+          friends: action.data.friends,
+          loggingIn: false
+        }
       }
       let error = {
         loggingIn: false,
@@ -38,6 +44,10 @@ const authReducer = (state = initialState, action) => {
       return reducer(state, action, loading, success, error)
     case LOGOUT:
       return Object.assign({}, state, {user:initialState.user})
+    case EDIT_USER:
+      return Object.assign({}, state, {edit: action.data,updates: action.data})
+    case COPY_USER:
+      return Object.assign({}, state, {edit: state.user})
     case REGISTER:
       const regLoading = { registering: true }
       const regSuccess = {
@@ -65,6 +75,13 @@ const authReducer = (state = initialState, action) => {
         error: action.error
       }
       return reducer(state, action, verLoading, verSuccess, verError)
+    case UPDATE:
+      const update = {
+        loading: { updating: true},
+        success: { user: action.data, updating: false},
+        error:   { error: action.error, updating: false}
+      }
+      return reducer(state, action, update.loading, update.success, update.error)
     case ADD_FRIEND:
       const friends = [...state.friends]
       if (action.status === "success") {

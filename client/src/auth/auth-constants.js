@@ -6,3 +6,7 @@ export const FORGOT_PASSWORD = 'FORGOT_PASSWORD'
 export const RESET_PASSWORD = 'RESET_PASSWORD'
 export const ADD_FRIEND='ADD_FRIEND'
 export const DELETE_FRIEND='DELETE_FRIEND'
+export const UPDATE='UPDATE'
+export const EDIT_USER='EDIT_USER'
+export const COPY_USER='COPY_USER'
+
