@@ -5,7 +5,7 @@ import Index from './components/index'
 import Login from './auth/login'
 import Register from './auth/register'
 import User from './user'
-import Edit from './auth/edit'
+import Edit from './edit'
 
 const Routes = () => (
   <Router history={hashHistory}>

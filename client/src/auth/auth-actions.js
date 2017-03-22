@@ -1,7 +1,6 @@
 import axios from 'axios'
 import cookie from 'react-cookie'
-import { LOGIN, LOGOUT, REGISTER, VERIFY, UPDATE, EDIT_USER, COPY_USER, EDIT_FIELD } 
-  from './auth-constants'
+import { LOGIN, LOGOUT, REGISTER, VERIFY, SET_USER } from './auth-constants'
 import config, { API_URL, CLIENT_ROOT_URL } from '../config'
 import action from '../redux/action'
 const axiosAuth = config.axios(cookie.load('token'))
@@ -23,17 +22,6 @@ export function verify() {
 }
 
 
-export function update(updates, id) {
-  return (dispatch) => {
-    return action({
-      dispatch,
-      request: axiosAuth.post,
-      url: `users/update/${id}`,
-      body: updates,
-      type: UPDATE
-    })
-  }
-}
 
 export function login(email, password) {
   return (dispatch) => {
@@ -51,7 +39,7 @@ export function login(email, password) {
   }
 }
 
-export function register ({firstName, lastName, email, password}) {
+export function register({firstName, lastName, email, password}) {
   return (dispatch) => {
     return action({
       dispatch,
@@ -67,33 +55,15 @@ export function register ({firstName, lastName, email, password}) {
   }
 }
 
-export function logout () {
+export function logout() {
   return (dispatch) => {
     dispatch({type: LOGOUT});
     cookie.remove('token', { path: '/' });
   }
 }
 
-export function editUser(updates) {
+export function setUser(user) {
   return (dispatch) => {
-    dispatch({
-      type: EDIT_USER,
-      data: updates
-    });
-  }
-}
-
-export function editField(field) {
-  return (dispatch) => {
-    dispatch({
-      type: EDIT_FIELD,
-      data: field
-    })
-  }
-}
-
-export function copyUser() {
-  return (dispatch) => {
-    dispatch({type: COPY_USER});
+    dispatch({type: SET_USER, data: user});
   }
 }

@@ -1,4 +1,4 @@
-import { LOGIN, LOGOUT, REGISTER, VERIFY, ADD_FRIEND, DELETE_FRIEND, UPDATE, EDIT_USER, COPY_USER, EDIT_FIELD} 
+import { LOGIN, LOGOUT, REGISTER, VERIFY, ADD_FRIEND, DELETE_FRIEND, SET_USER} 
   from './auth-constants'
 import reducer from '../redux/reducer'
 
@@ -13,15 +13,11 @@ const initialState = {
     sex: '',
     created: ''
   },
-  updates: {},
-  edit: {},
-  editing: {},
   friends: [],
   error: undefined,
   loggingIn: false,
   registering: false,
   verifying: false,
-  updating: false,
   adding: false,
   deleting: false
 }
@@ -45,14 +41,6 @@ const authReducer = (state = initialState, action) => {
       return reducer(state, action, loading, success, error)
     case LOGOUT:
       return Object.assign({}, state, {user:initialState.user})
-    case EDIT_USER:
-      const updates = Object.assign({}, state.updates, action.data)
-      const edit = Object.assign({}, state.edit, action.data)
-      return Object.assign({}, state, {edit, updates})
-    case EDIT_FIELD:
-      return Object.assign({}, state, {editing: action.data})
-    case COPY_USER:
-      return Object.assign({}, state, {edit: state.user})
     case REGISTER:
       const regLoading = { registering: true }
       const regSuccess = {
@@ -80,13 +68,9 @@ const authReducer = (state = initialState, action) => {
         error: action.error
       }
       return reducer(state, action, verLoading, verSuccess, verError)
-    case UPDATE:
-      const update = {
-        loading: { updating: true},
-        success: { user: action.data, updating: false},
-        error:   { error: action.error, updating: false}
-      }
-      return reducer(state, action, update.loading, update.success, update.error)
+    case SET_USER: 
+      const update = { updating: false, user: action.data }
+      return Object.assign({}, state, update)
     case ADD_FRIEND:
       const friends = [...state.friends]
       if (action.status === "success") {
