@@ -24,11 +24,12 @@ class Edit extends React.Component {
   }
   render() {
     const {edit, auth} = this.props
-    const firstName = edit.data.firstName? edit.data.firstName : auth.user.firstName
-    const lastName = edit.data.lastName? edit.data.lastName : auth.user.lastName
-    const email = edit.data.email? edit.data.email : auth.user.email
-    const password = edit.data.password? edit.data.password : auth.user.password
-    const bio = edit.data.bio? edit.data.bio : edit.data.bio
+    const firstName = edit.data.firstName ? edit.data.firstName : auth.user.firstName
+    const lastName = edit.data.lastName ? edit.data.lastName : auth.user.lastName
+    const email = edit.data.email ? edit.data.email : auth.user.email
+    const password = edit.data.password ? edit.data.password : auth.user.password
+    const bio = edit.data.bio ? edit.data.bio : auth.user.bio
+    const sex = edit.data.sex ? edit.data.sex : auth.user.sex
     return (
       <EditForm 
         handleChange={this.handleChange}
@@ -38,6 +39,7 @@ class Edit extends React.Component {
         email={email}
         password={password}
         bio={bio}
+        sex={sex}
       />
     )
   }

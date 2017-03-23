@@ -1,6 +1,7 @@
 import React from 'react'
 import Field from '../components/field'
 import Form from '../components/form'
+import Dropdown from '../components/dropdown'
 
 const EditForm = (props) => (
   <div className="padded">
@@ -25,6 +26,10 @@ const EditForm = (props) => (
       <Field label="Bio" inputClass="u-full-width" type="text"
         name="bio" maxLength="500" handleChange={props.handleChange}
         value={props.bio}
+      />
+      <Dropdown label="Gender" inputClass="u-full-width" name="sex"
+        handleChange={props.handleChange} options={['Male','Female','Neutral']}
+        value={props.sex}
       />
     </Form>
   </div>

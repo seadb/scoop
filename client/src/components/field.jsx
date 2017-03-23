@@ -2,7 +2,7 @@
 import React from 'react'
 
 const Field = (props) => (
-  <div>
+  <fieldset>
     <label htmlFor={props.name}>{props.label}</label> 
     <input
       className={props.inputClass}
@@ -12,7 +12,7 @@ const Field = (props) => (
       onChange={props.handleChange}
       value={props.value}
     />
-  </div>
+  </fieldset>
 )
 
 Field.propTypes = {
