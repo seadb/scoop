@@ -1,4 +1,4 @@
 #!/bin/bash
-psql -d scoop -U chelsea < user/user.sql
-psql -d scoop -U chelsea < friend/friend.sql
-psql -d scoop -U chelsea < session/session.sql
+psql -d scoop  < user/user.sql
+psql -d scoop  < friend/friend.sql
+psql -d scoop  < session/session.sql
