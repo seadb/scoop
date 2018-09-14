@@ -3,7 +3,7 @@ var humps = require('humps')
 var axios = require('axios')
 
 
-const whitelist = ['http://localhost:*', 'http://localhost:8000', 'http://localhost:8100']
+const whitelist = ['http://localhost:*', 'http://localhost:3000', 'http://localhost:8100']
 
 const camelizeColumnNames = (data) => {
   var template = data[0];
@@ -43,11 +43,8 @@ const config = {
     }
   },
   cors: {
-    origin: (origin, callback) => {
-      var error = 'Request to '+ origin +' not valid'
-      const inWhitelist = whitelist.indexOf(origin) > -1
-      callback(inWhitelist ? null : error, inWhitelist)
-    },
+			origin: 'http://localhost:3003'
+		},
     optionsSuccessStatus: 200
   }
 }
