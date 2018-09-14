@@ -28,7 +28,7 @@ const authReducer = (state = initialState, action) => {
       let loading = { loggingIn: true }
       let success = {}
       if (action.status === "success") {
-          success = {
+        success = {
           user: action.data.user,
           friends: action.data.friends,
           loggingIn: false
@@ -43,12 +43,15 @@ const authReducer = (state = initialState, action) => {
       return Object.assign({}, state, {user:initialState.user})
     case REGISTER:
       const regLoading = { registering: true }
-      const regSuccess = {
-        user: action.data.user,
-        friends: action.data.friends,
-        registering: false 
+      let regSuccess = {};
+      if (action.status === "success") {
+        regSuccess = {
+          user: action.data.user,
+          friends: action.data.friends,
+          registering: false 
+        }
       }
-      const regError = {
+      let regError = {
         registering: false,
         error: action.error
       }

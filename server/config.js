@@ -1,9 +1,8 @@
-var promise= require('bluebird')
-var humps = require('humps')
-var axios = require('axios')
+var promise = require('bluebird');
+var humps = require('humps');
+var axios = require('axios');
 
-
-const whitelist = ['http://localhost:*', 'http://localhost:3000', 'http://localhost:8100']
+const whitelist = ['http://localhost:*', 'http://localhost:3000', 'http://localhost:8100'];
 
 const camelizeColumnNames = (data) => {
   var template = data[0];
@@ -43,10 +42,9 @@ const config = {
     }
   },
   cors: {
-			origin: 'http://localhost:8100'
-		},
-    optionsSuccessStatus: 200
-  }
+			origin: 'http://localhost:8100',
+      optionsSuccessStatus: 200
+	}
 }
 
 
