@@ -43,7 +43,7 @@ const config = {
     }
   },
   cors: {
-			origin: 'http://localhost:3003'
+			origin: 'http://localhost:8100'
 		},
     optionsSuccessStatus: 200
   }
