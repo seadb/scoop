@@ -11,10 +11,22 @@ const login = (req, res, next) => {
     const user = results[0];
     return bcrypt.compare(req.body.password, user.password);
   })
+  .catch((error) => {
+    return error;
+  });
   Promise
     .all([userPromise, compare])
     .then(results => {
       const user = results[0][0];
+			const user_whitelisted = {
+				firstName: user.firstName,
+				lastName: user.lastName,
+				bio: user.bio,
+				age: user.age,
+				sex: user.sex,
+				email: user.email,
+				id: user.id,
+			};
       const friends = results[0][1]
       const bool = results[1];
       if (!bool) {
@@ -26,7 +38,7 @@ const login = (req, res, next) => {
       else {
         const token = jwt.sign({sub: user.id}, config.secret, config.expiresIn);
         res.status(200).json({
-          user: user,
+          user: user_whitelisted,
           friends: friends,
           token: token
         });
