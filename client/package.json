@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "axios": "^0.15.3",
+    "express": "^4.16.3",
     "ionic": "^2.0.0",
     "react": "^15.4.2",
     "react-cookie": "^1.0.4",
