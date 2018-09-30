@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 export const API_URL='http://69.16.197.116:3001/api'
-export const CLIENT_ROOT_URL='http://localhost:8100/#'
+export const CLIENT_ROOT_URL='http://69.16.197.116:8100/#'
 
 const config = {
   axios: (token) => {
