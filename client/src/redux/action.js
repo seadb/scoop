@@ -20,7 +20,7 @@ const action = ({dispatch, request, body, type, url}) => {
       status: 'success',
       data: response.data
     });
-    return response
+    return Promise.resolve(response);
   })
   .catch(error => {
     dispatch({

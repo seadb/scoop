@@ -8,20 +8,22 @@ const Friend = new friendModel();
 const SALT_FACTOR = 5;
 
 // Uses props from User.fields to generate insert SQL statement
-const generateRow = function(props) {
-  let columns = ''
-  let values = ''
-  for (const prop in props) {
-    values = values + '${' + prop + '}, '
-    const newProp = prop.replace(/([a-z])([A-Z])/g, '$1_$2').toLowerCase()
-    columns = columns + newProp + ', '
+const generateRow = function(fields) {
+  let columns = [];
+  let values = [];
+  for (const key in fields) {
+    if (fields[key]) {
+      values.push('${' + key + '}');
+      const column = key.replace(/([a-z])([A-Z])/g, '$1_$2').toLowerCase();
+      columns.push(column);
+    }
   }
-  columns = columns.slice(0, columns.length-2)
-  values = values.slice(0, values.length-2)
+  columns = columns.join(', ');
+  values = values.join(', ');
   return {
     columns: columns,
     values: values
-  }
+  };
 }
 
 const generateUpdate = function(props) {

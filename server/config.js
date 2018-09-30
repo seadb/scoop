@@ -2,7 +2,7 @@ var promise = require('bluebird');
 var humps = require('humps');
 var axios = require('axios');
 
-const whitelist = ['http://localhost:*', 'http://localhost:3000', 'http://localhost:8100'];
+const whitelist = ['http://localhost:*', 'http://69.16.197.116:8100/'];
 
 const camelizeColumnNames = (data) => {
   var template = data[0];
@@ -42,9 +42,15 @@ const config = {
     }
   },
   cors: {
-			origin: 'http://localhost:8100',
+      origin: function (origin, callback) {
+        if (whitelist.indexOf(origin) !== -1) {
+        callback(null, true)
+        } else {
+          callback(new Error('Not allowed by CORS'))
+        }
+      },
       optionsSuccessStatus: 200
-	}
+  }
 }
 
 
