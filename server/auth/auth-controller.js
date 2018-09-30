@@ -59,7 +59,7 @@ const logout = () => {
 }
 
 const register = (req, res, next) => {
-  req.body.age ? parseInt(req.body.age) : '';
+  req.body.age = req.body.age ? parseInt(req.body.age) : '';
   const User = new userModel(req.body);
   User.lookup(req.body.email)
     .then((results) => {
