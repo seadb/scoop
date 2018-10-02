@@ -22,5 +22,14 @@ module.exports = {
   },
   devServer: {
     historyApiFallback: true,
-  }
+  },
+  plugins: [
+    new webpack.DefinePlugin({
+      'env': {
+        'API_URL': JSON.stringify(process.env.API_URL),
+        'CLIENT_ROOT_URL': JSON.stringify(process.env.CLIENT_ROOT_URL)
+      }
+    }),
+  ]
+}
 }

@@ -1,3 +1,5 @@
+const webpack = require('webpack');
+
 module.exports = {
   devtool: 'source-map',
   entry: './src/app.js',
@@ -17,5 +19,13 @@ module.exports = {
         presets: ['es2015', 'react']
       }
     }]
-  }
+  },
+  plugins: [
+    new webpack.DefinePlugin({
+      'env': {
+        'API_URL': JSON.stringify(process.env.API_URL),
+        'CLIENT_ROOT_URL': JSON.stringify(process.env.CLIENT_ROOT_URL)
+      }
+    }),
+  ]
 }
